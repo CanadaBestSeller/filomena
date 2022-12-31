@@ -19,6 +19,6 @@
 }
 
 #top-level {
-  background-color: rgba(27, 190, 37, 0.361);
+  /*background-color: rgba(27, 190, 37, 0.361);*/
 }
 </style>
