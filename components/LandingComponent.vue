@@ -4,13 +4,11 @@
     <template #header>Filomena</template>
 
     <template #lead>
-      A free lighthearted game for the virtual office 🥳
+      {{ $t('landing.description') }}
     </template>
 
-<!--    <LandingCarousel />-->
-
-    <b-button class="shadow" size="lg" variant="primary">Join Party 👋</b-button>
-    <b-button class="shadow" size="lg" variant="outline-success">Start Party 🌱</b-button>
+    <b-button class="shadow" size="lg" variant="primary">{{ $t('landing.joinParty') }}</b-button>
+    <b-button class="shadow" size="lg" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
 
   </b-jumbotron>
 </template>

@@ -44,9 +44,41 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    // https://i18n.nuxtjs.org/basic-usage - Need to register Axios AFTER i18n
+    '@nuxtjs/i18n',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios'
   ],
+
+  i18n: {
+    baseUrl: '', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-US',
+        file: 'en.js',
+        isCatchallLocale: true
+      },
+      {
+        code: 'fr',
+        iso: 'fr-FR',
+        file: 'fr.js'
+      },
+      {
+        code: 'zh',
+        iso: 'zh-CN',
+        file: 'zh.js'
+      }
+    ],
+    lazy: true,
+    langDir: 'lang/',
+    defaultLocale: 'en',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root' // recommended: https://i18n.nuxtjs.org/browser-language-detection
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

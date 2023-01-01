@@ -2,15 +2,15 @@
   <b-navbar id="navbar" fixed="bottom" class="justify-content-between">
     <b-navbar-nav>
       <li id="i18n" class="nav-item" size="lg">
-        🇨🇦
+        <I18nSelector />
       </li>
     </b-navbar-nav>
 
     <b-navbar-nav>
       <li class="nav-item">
-        <p id="credits">
-          By <a href="https://github.com/CanadaBestSeller"> CanadaBestSeller</a>
-        </p>
+        <i18n id="credits" path="landing.madeBy" tag="p">
+          <a href="https://github.com/CanadaBestSeller">CanadaBestSeller</a>
+        </i18n>
       </li>
     </b-navbar-nav>
 
