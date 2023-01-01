@@ -45,7 +45,6 @@
 <style>
 .btn {
   margin: 0.2rem;
-  border-radius: 1rem;
 }
 .carousel-caption {
   top: 50%;
