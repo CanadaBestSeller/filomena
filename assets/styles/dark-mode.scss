@@ -1,0 +1,42 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.dark-mode{
+
+  $card-bg: rgb(78, 78, 78);
+  $body-bg: rgb(41, 41, 41);
+
+  $primary: rgb(0, 183, 255);
+  $secondary: white;
+  $danger: rgb(255, 60, 60);
+  $success: rgb(1, 210, 1);
+
+  $theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "danger": $danger,
+    "info": $indigo,
+    "dark": $dark,
+    "light": #aaa,
+  );
+
+  h6, h1, h2, h4, h5, p {
+    color: white;
+  }
+
+  $link-color: cyan;
+  $link-hover-color: cyan;
+  $link-active-color: cyan;
+
+  $dark: white;
+  $light: $body-bg;
+
+  $modal-content-bg: $card-bg;
+
+  #top-level {
+    background-color: #062c33;
+  }
+
+  @import './assets/styles/app.scss';
+}
