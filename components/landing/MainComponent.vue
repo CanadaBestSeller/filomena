@@ -14,8 +14,8 @@
       <b-button class="shadow" size="lg" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
     </b-jumbotron>
 
-    <IntroComponent />
-    <HowToPlayPopover />
+    <LandingIntroComponent />
+    <LandingHowToPlay />
 
   </div>
 </template>
