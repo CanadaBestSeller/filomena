@@ -14,5 +14,12 @@ export default {
     devices: '📱 Phone or Computer 💻',
     eof: ''
   },
+  howToPlay: {
+    howToPlay: 'How to Play',
+    step1: 'Step 1: Answer whimsical questions about each other',
+    step2: 'Step 2: Vote on the best answer, winner gets points',
+    step3: 'Step 3: Repeat, tally up the points, and play again!',
+    eof: ''
+  },
   eof: ''
 }
