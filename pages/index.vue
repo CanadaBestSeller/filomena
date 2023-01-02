@@ -1,5 +1,5 @@
 <template>
-  <LandingComponent />
+  <LandingMainComponent />
 </template>
 
 <script>

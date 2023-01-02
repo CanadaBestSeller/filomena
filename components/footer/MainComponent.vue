@@ -2,7 +2,7 @@
   <b-navbar id="navbar" fixed="bottom" class="justify-content-between">
     <b-navbar-nav>
       <li id="i18n" class="nav-item" size="lg">
-        <I18nSelector />
+        <FooterI18nSelector />
       </li>
     </b-navbar-nav>
 
