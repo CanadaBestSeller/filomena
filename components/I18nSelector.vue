@@ -11,22 +11,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      isDropped: false
-    }
-  },
-
-  methods: {
-    toggleDropup () {
-      this.isDropped = !this.isDropped
-    }
-  }
-}
-</script>
-
 <style>
 /* Make locale text smaller */
 .locale-text {
