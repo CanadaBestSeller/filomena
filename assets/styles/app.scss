@@ -13,10 +13,19 @@ $font-family-sans-serif: "Cera Round Pro Medium";
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: .9rem;
 }
 
 .btn {
   font-family: "Cera Round Pro Bold", sans-serif;
   border-radius: 1rem;
   margin: 0.2rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h5 {
+  font-size: 1.1rem;
 }
