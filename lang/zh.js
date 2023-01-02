@@ -14,5 +14,12 @@ export default {
     devices: '📱手机或者电脑 💻',
     eof: ''
   },
+  howToPlay: {
+    howToPlay: '怎么玩',
+    step1: '1: 互相回答有趣的问题',
+    step2: '2: 投票选出最佳答案，获胜者获得积分',
+    step3: '3: 重复，计算分数，然后再次玩!',
+    eof: ''
+  },
   eof: ''
 }
