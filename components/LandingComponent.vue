@@ -12,13 +12,7 @@
     <b-button class="shadow" size="lg" variant="primary">{{ $t('landing.joinParty') }}</b-button>
     <b-button class="shadow" size="lg" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
 
-<!--    <IntroComponent />-->
+    <IntroComponent />
 
   </b-jumbotron>
 </template>
-
-<style>
-h1 {
-  font-size: 5rem;
-}
-</style>
