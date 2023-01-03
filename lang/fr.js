@@ -21,5 +21,19 @@ export default {
     step3: '3e étape: Répéter, compter les points et rejouer!',
     eof: ''
   },
+  start: {
+    letsStartTheParty: 'Commençons la fête 🎉',
+    eof: ''
+  },
+  form: {
+    whatsYourName: 'Comment t\'appelles-tu?',
+    whatsYourNameHint: 'Par exemple, "David"',
+    eof: ''
+  },
+  general: {
+    back: 'Retourner ↩️',
+    confirm: 'Allons-y 😎',
+    eof: ''
+  },
   eof: ''
 }
