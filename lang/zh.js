@@ -2,6 +2,7 @@ export default {
   landing: {
     title: 'Thumbs Up!',
     subtitle: '免费轻松的游戏 🐇',
+    welcomeBack: '欢迎回来大卫, {0} 😎',
     madeBy: '{0} 做的',
     joinParty: '参加派对 👋',
     startParty: '创造派对 🌱',

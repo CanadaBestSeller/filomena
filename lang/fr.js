@@ -2,6 +2,7 @@ export default {
   landing: {
     title: 'Thumbs Up!',
     subtitle: 'Un jeu amusant gratuit 😄',
+    welcomeBack: 'Bon retour, {0} 😎',
     madeBy: 'Fait par {0}',
     joinParty: 'Rejoindre la fête 👋',
     startParty: 'Démarrer une fête 🌱',
