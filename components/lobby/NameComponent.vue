@@ -1,9 +1,10 @@
 <template>
   <!--  Center the component-->
   <div class="text-center bg-transparent">
-    <h2 class="mb-5">
+
+    <h3 class="mb-4">
       {{ $t('start.letsStartTheParty') }}
-    </h2>
+    </h3>
 
     <div class="mx-5">
       <b-form @submit.prevent="guestSignIn">
@@ -21,6 +22,7 @@
 
       </b-form>
     </div>
+
   </div>
 </template>
 

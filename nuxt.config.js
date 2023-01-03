@@ -60,6 +60,7 @@ export default {
 
   i18n: {
     baseUrl: 'https://thumbs.up.railway.app', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
+    strategy: 'no_prefix', // Our game heavily uses dynamic URLs, e.g.) domain.com/AX7F, we don't want i18n prefixes
     locales: [
       {
         code: 'en',

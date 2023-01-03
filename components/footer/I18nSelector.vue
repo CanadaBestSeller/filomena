@@ -4,9 +4,9 @@
       🌎
     </b-link>
     <div class="dropup-content" @click="hideDropup()" @mouseleave="hideDropup()">
-      <nuxt-link :to="switchLocalePath('en')">🇺🇸 <span class="locale-text">English</span></nuxt-link>
-      <nuxt-link :to="switchLocalePath('fr')">🇫🇷 <span class="locale-text">Français</span></nuxt-link>
-      <nuxt-link :to="switchLocalePath('zh')">🇨🇳 <span class="locale-text">中文</span></nuxt-link>
+      <b-link @click="switchLocale('en')">🇺🇸 <span class="locale-text">English</span></b-link>
+      <b-link @click="switchLocale('fr')">🇫🇷 <span class="locale-text">Français</span></b-link>
+      <b-link @click="switchLocale('zh')">🇨🇳 <span class="locale-text">中文</span></b-link>
     </div>
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
     },
     hideDropup () {
       this.$el.querySelector('.dropup-content').style.display = 'none'
+    },
+    switchLocale (locale) {
+      this.$i18n.setLocale(locale)
     }
   }
 }

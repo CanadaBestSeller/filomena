@@ -1,5 +1,5 @@
 <template>
-  <StartNameComponent />
+  <LobbyNameComponent />
 </template>
 
 <script>
