@@ -5,20 +5,25 @@ export default {
     port: process.env.PORT || 3000 // default: 3000
   },
 
-  head: {
-    title: 'Thumbs Up!',
-    htmlAttrs: {
-      lang: 'en'
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+  head () {
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true })
+    return {
+      title: 'Thumbs Up!',
+      htmlAttrs: {
+        ...i18nHead.htmlAttrs
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+        { name: 'format-detection', content: 'telephone=no' },
+        ...i18nHead.meta
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        ...i18nHead.link
+      ]
+    }
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -56,7 +61,7 @@ export default {
   ],
 
   i18n: {
-    baseUrl: '', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
+    baseUrl: 'https://thumbs.up.railway.app', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
     locales: [
       {
         code: 'en',
