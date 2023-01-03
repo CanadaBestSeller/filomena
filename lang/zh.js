@@ -21,5 +21,19 @@ export default {
     step3: '3: 重复，计算分数，然后再次玩!',
     eof: ''
   },
+  start: {
+    letsStartTheParty: '🎊狂欢吧🎊',
+    eof: ''
+  },
+  form: {
+    whatsYourName: '你叫什么名字?',
+    whatsYourNameHint: '例如，“大卫”',
+    eof: ''
+  },
+  general: {
+    back: '退回↩️',
+    confirm: '确认😎',
+    eof: ''
+  },
   eof: ''
 }
