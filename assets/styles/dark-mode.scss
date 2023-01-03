@@ -21,7 +21,7 @@
     "light": #aaa,
   );
 
-  h6, h1, h2, h4, h5, p {
+  h6, h1, h2, h4, h5, p, label {
     color: white;
   }
 
@@ -32,6 +32,11 @@
   $link-color: cyan;
   $link-hover-color: cyan;
   $link-active-color: cyan;
+
+  $input-focus-color: black;
+  $input-plaintext-color: black;
+  $input-color: black;
+  $input-placeholder-color: DarkGray;
 
   $dark: white;
   $light: $body-bg;

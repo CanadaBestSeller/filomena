@@ -10,8 +10,8 @@
         {{ $t('landing.subtitle') }}
       </h5>
 
-      <b-button class="shadow" size="lg" variant="primary">{{ $t('landing.joinParty') }}</b-button>
-      <b-button class="shadow" size="lg" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
+      <b-button class="shadow" size="lg" @click="joinParty()" variant="primary">{{ $t('landing.joinParty') }}</b-button>
+      <b-button class="shadow" size="lg" @click="startParty()" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
     </b-jumbotron>
 
     <LandingIntroComponent />
@@ -19,3 +19,16 @@
 
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    joinParty () {
+      return 42 // TODO implement method
+    },
+    startParty () {
+      this.$router.push({ path: this.localePath({ path: '/start' }) })
+    }
+  }
+}
+</script>

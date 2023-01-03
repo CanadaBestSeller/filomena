@@ -6,7 +6,7 @@ export default {
   },
 
   head: {
-    title: 'Blow Up!',
+    title: 'Thumbs Up!',
     htmlAttrs: {
       lang: 'en'
     },

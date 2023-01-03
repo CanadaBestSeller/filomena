@@ -1,6 +1,6 @@
 export default {
   landing: {
-    title: 'Blow Up!',
+    title: 'Thumbs Up!',
     subtitle: 'Un jeu amusant gratuit 😄',
     madeBy: 'Fait par {0}',
     joinParty: 'Rejoindre la fête 👋',
@@ -19,6 +19,20 @@ export default {
     step1: '1er étape: Répondez à des questions drôles les uns sur les autres',
     step2: '2d étape: Voter pour la meilleure réponse, le gagnant obtient des points',
     step3: '3e étape: Répéter, compter les points et rejouer!',
+    eof: ''
+  },
+  start: {
+    letsStartTheParty: 'Commençons la fête 🎉',
+    eof: ''
+  },
+  form: {
+    whatsYourName: 'Comment t\'appelles-tu?',
+    whatsYourNameHint: 'Par exemple, "David"',
+    eof: ''
+  },
+  general: {
+    back: 'Retourner ↩️',
+    confirm: 'Allons-y 😎',
     eof: ''
   },
   eof: ''
