@@ -22,18 +22,23 @@ export default {
     step3: '3: 重复，计算分数，然后再次玩!',
     eof: ''
   },
-  start: {
+  lobby: {
     letsStartTheParty: '🎊狂欢吧🎊',
     eof: ''
   },
   form: {
     whatsYourName: '你叫什么名字?',
     whatsYourNameHint: '例如，“大卫”',
+    enterTheCode: '4字代码:',
+    enterTheCodeHint: '例如，“x888”',
     eof: ''
   },
   general: {
     back: '退回↩️',
     confirm: '确认😎',
+    confirmName: '是我! ✅',
+    clickToCopyToClipboard: '☝️ 点击拷贝到剪贴板',
+    copied: '拷贝了!',
     eof: ''
   },
   eof: ''

@@ -6,20 +6,7 @@
         {{ $t('landing.title') }}
       </h1>
 
-      <FunctionalAuthFirebaseUser>
-        <template #user="{ user }">
-          <div v-if="user">
-            <i18n class="mx-4 mb-4" path="landing.welcomeBack" tag="h5">
-              {{ user.displayName }}
-            </i18n>
-          </div>
-          <div v-else>
-            <h5 class="mx-4 mb-4">
-              {{ $t('landing.subtitle') }}
-            </h5>
-          </div>
-        </template>
-      </FunctionalAuthFirebaseUser>
+      <h5 class="mx-4 mb-4">{{ $t('landing.subtitle') }}</h5>
 
       <b-button class="shadow" size="lg" @click="joinParty()" variant="primary">{{ $t('landing.joinParty') }}</b-button>
       <b-button class="shadow" size="lg" @click="startParty()" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
@@ -35,10 +22,10 @@
 export default {
   methods: {
     joinParty () {
-      return 42 // TODO implement method
+      this.$router.push('/enter')
     },
     startParty () {
-      this.$router.push({ path: this.localePath({ path: '/start' }) })
+      this.$router.push('/start')
     }
   }
 }

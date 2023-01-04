@@ -1,9 +1,9 @@
 <template>
-  <LobbyStartRoom />
+  <LobbyEnterRoom />
 </template>
 
 <script>
 export default {
-  name: 'StartPage',
+  name: 'EnterPage'
 }
 </script>

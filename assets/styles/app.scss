@@ -30,8 +30,15 @@ body {
   margin: 0.2rem;
 }
 
+
 h1 { font-size: 4rem; }
 h2 { font-size: 3rem; }
 h3 { font-size: 2rem; }
 h4 { font-size: 1.5rem; }
 h5, label { font-size: 1.2rem; }
+
+[v-cloak] { display: none; } /*Prevents flashing - component templates with v-cloak will be hidden until rendered*/
+
+//Transition for v-if, v-else-if, and v-else directives
+.fade-enter-active, .fade-leave-active { transition: opacity .5s; }
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ { opacity: 0; }

@@ -22,18 +22,23 @@ export default {
     step3: 'Step 3: Repeat, tally up the points, and play again!',
     eof: ''
   },
-  start: {
+  lobby: {
     letsStartTheParty: 'Let\'s start the party 🎉',
     eof: ''
   },
   form: {
     whatsYourName: 'What\'s your name?',
     whatsYourNameHint: 'E.g.) "David"',
+    enterTheCode: '4-character code:',
+    enterTheCodeHint: 'E.g.) "h4py"',
     eof: ''
   },
   general: {
     back: 'Back ↩️',
     confirm: 'Let\'s go 😎',
+    confirmName: 'That\'s me! ✅',
+    clickToCopyToClipboard: '☝️ Click to copy to clipboard',
+    copied: 'Copied!',
     eof: ''
   },
   eof: ''
