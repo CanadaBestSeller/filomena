@@ -24,6 +24,7 @@ export default {
   },
   start: {
     letsStartTheParty: '🎊狂欢吧🎊',
+    creatingRoom: 'creatingRoom',
     eof: ''
   },
   form: {

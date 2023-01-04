@@ -3,11 +3,12 @@
   <div class="text-center bg-transparent">
 
     <h3 class="mb-4">
+      {{ this.$route.params }}
       {{ $t('start.letsStartTheParty') }}
     </h3>
 
     <div class="mx-5">
-      <b-form @submit.prevent="guestSignIn">
+      <b-form @submit.prevent="guestSignInAndRedirect">
         <b-form-group id="form-group-name lg" :label="$t('form.whatsYourName')" label-for="form-input-name">
           <b-form-input id="form-input-name" v-model="form.name" :placeholder="$t('form.whatsYourNameHint')" required />
           <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
@@ -40,12 +41,13 @@ export default {
       }
     }
   },
+
   computed: {
     isNameFieldInvalid () { return !this.form.name ? true : this.form.name.length > 40 }
   },
-  methods: {
 
-    async guestSignIn () {
+  methods: {
+    async guestSignInAndRedirect () {
       try {
         this.form.isLoading = true
         this.form.errorMessage = null
@@ -58,11 +60,12 @@ export default {
 
       } finally {
         this.form.isLoading = false
+        this.$router.push(this.$route.params.destination)
       }
     },
 
     goBack () {
-      this.$router.push({ path: this.localePath({ path: '/' }) })
+      this.$router.push('/')
     }
   }
 }

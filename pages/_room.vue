@@ -1,13 +1,13 @@
 <template>
-  <LobbyCreateRoom />
+  <LobbyRoomComponent />
 </template>
 
 <script>
 import { auth } from '@/db/firebase'
-import { redirectIfUnauthenticated, AuthContext } from '@/lib/redirect'
+import { AuthContext } from '~/lib/redirect'
 
 export default {
-  name: 'StartPage',
+  name: 'RoomPage',
   middleware(context) {
     console.log('inside start middleware')
 
@@ -16,7 +16,7 @@ export default {
       console.log("Not authenticated, redirecting")
       const routeParams = {
         authContext: AuthContext.START,
-        destination: '/start',
+        destination: context.route.params.room,
         metadata: null
       }
       context.app.router.push({ name: 'hello', params: routeParams })

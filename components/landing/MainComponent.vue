@@ -8,16 +8,8 @@
 
       <FunctionalAuthFirebaseUser>
         <template #user="{ user }">
-          <div v-if="user">
-            <i18n class="mx-4 mb-4" path="landing.welcomeBack" tag="h5">
-              {{ user.displayName }}
-            </i18n>
-          </div>
-          <div v-else>
-            <h5 class="mx-4 mb-4">
-              {{ $t('landing.subtitle') }}
-            </h5>
-          </div>
+          <div v-if="user"><i18n class="mx-4 mb-4" path="landing.welcomeBack" tag="h5">{{ user.displayName }}</i18n></div>
+          <div v-else><h5 class="mx-4 mb-4">{{ $t('landing.subtitle') }}</h5></div>
         </template>
       </FunctionalAuthFirebaseUser>
 
@@ -38,7 +30,7 @@ export default {
       return 42 // TODO implement method
     },
     startParty () {
-      this.$router.push({ path: this.localePath({ path: '/start' }) })
+      this.$router.push('/start')
     }
   }
 }

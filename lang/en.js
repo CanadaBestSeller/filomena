@@ -24,6 +24,7 @@ export default {
   },
   start: {
     letsStartTheParty: 'Let\'s start the party 🎉',
+    creatingRoom: 'creatingRoom',
     eof: ''
   },
   form: {
