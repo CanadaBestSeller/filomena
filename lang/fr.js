@@ -30,7 +30,7 @@ export default {
     whatsYourName: 'Comment t\'appelles-tu?',
     whatsYourNameHint: 'Par exemple, "David"',
     enterTheCode: '4 Caractères:',
-    enterTheCodeHint: 'E.g.) "ch47"',
+    enterTheCodeHint: 'p. ex. "CH47"',
     eof: ''
   },
   general: {
@@ -39,6 +39,8 @@ export default {
     confirmName: 'C\'est moi! ✅',
     clickToCopyToClipboard: '☝️ Cliquer pour copier dans le presse-papiers',
     copied: 'Copié!',
+    chatroom: 'Salon',
+    sendMessage: 'Envoyer ✈️',
     eof: ''
   },
   eof: ''

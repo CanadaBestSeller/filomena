@@ -41,7 +41,7 @@ export default {
 
 <style>
 .room-link-div {
-  margin: 3rem 0;
+  margin: 0;
 }
 
 .room-link {

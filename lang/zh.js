@@ -29,8 +29,8 @@ export default {
   form: {
     whatsYourName: '你叫什么名字?',
     whatsYourNameHint: '例如，“大卫”',
-    enterTheCode: '4字代码:',
-    enterTheCodeHint: '例如，“x888”',
+    enterTheCode: '四字代码:',
+    enterTheCodeHint: '例如“X888”',
     eof: ''
   },
   general: {
@@ -39,6 +39,8 @@ export default {
     confirmName: '是我! ✅',
     clickToCopyToClipboard: '☝️ 点击拷贝到剪贴板',
     copied: '拷贝了!',
+    chatroom: '聊天室',
+    sendMessage: '发 ✈️',
     eof: ''
   },
   eof: ''

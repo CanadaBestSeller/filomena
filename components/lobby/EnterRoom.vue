@@ -3,8 +3,8 @@
     <h3>{{ $t('form.enterTheCode') }}</h3>
     <div class="mx-5">
       <b-form @submit.prevent="guestSignInAndJoinRoom">
-        <b-form-group id="form-group-code lg">
-          <b-form-input id="form-input-code" class="text-center" maxlength="4" v-model="form.code" :placeholder="$t('form.enterTheCodeHint')" required />
+        <b-form-group id="form-group-code mx-5">
+          <b-form-input id="form-input-code" class="text-center" maxlength="4" v-model="form.code" :placeholder="$t('form.enterTheCodeHint')" required oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"/>
           <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
         </b-form-group>
 
@@ -45,3 +45,10 @@ export default {
   }
 }
 </script>
+
+<style>
+#form-input-code {
+  height: 3.5rem;
+  font-size: 2.5rem;
+}
+</style>
