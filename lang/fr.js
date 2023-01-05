@@ -30,7 +30,7 @@ export default {
     whatsYourName: 'Comment t\'appelles-tu?',
     whatsYourNameHint: 'Par exemple, "David"',
     enterTheCode: '4 Caractères:',
-    enterTheCodeHint: 'E.g.) "ch47"',
+    enterTheCodeHint: 'p. ex. "CH47"',
     eof: ''
   },
   general: {

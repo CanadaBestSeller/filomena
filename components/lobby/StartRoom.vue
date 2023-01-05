@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { auth } from '@/db/firebase'
+import { auth } from '@/db/firebase.js'
+import { createRoomWithUniqueId } from '@/lib/firebase_utils'
 export default {
 
   data () {
@@ -66,7 +67,9 @@ export default {
 
         // Need to wait for this critical step, otherwise the player will not have a displayName in the next screen
         await auth.currentUser.updateProfile({ displayName: this.form.name })
-        await this.$router.push('/room')
+
+        const roomId = await createRoomWithUniqueId(this.user.uid)
+        await this.$router.push('/' + roomId)
 
       } catch (error) {
         this.form.errorMessage = error.message
@@ -91,8 +94,22 @@ export default {
      * @returns {Promise<void>}
      */
     user: async function(newUser, oldUser) {
-      if (newUser && newUser !== 'loading' && oldUser === 'loading') { await this.$router.push('/room') }
+      if (newUser && newUser !== 'loading' && oldUser === 'loading') {
+        const roomId = await createRoomWithUniqueId(this.user.uid)
+        await this.$router.push('/' + roomId)
+      }
     }
   }
 }
 </script>
+
+<style>
+#form-input-name {
+  height: 2.5rem;
+  font-size: 1.5rem;
+}
+
+.btn {
+  margin: .2rem;
+}
+</style>

@@ -30,7 +30,7 @@ export default {
     whatsYourName: 'What\'s your name?',
     whatsYourNameHint: 'E.g.) "David"',
     enterTheCode: '4-character code:',
-    enterTheCodeHint: 'E.g.) "h4py"',
+    enterTheCodeHint: 'E.g.) "H4PY"',
     eof: ''
   },
   general: {
