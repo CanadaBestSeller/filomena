@@ -17,6 +17,10 @@ export default {
     }
   },
 
+  computed: {
+    roomLink () { return 'thumbs.up.railway.app/' + this.roomId },
+  },
+
   methods: {
     copyLinkToClipboard () {
       navigator.clipboard.writeText(this.roomLink)
@@ -34,7 +38,7 @@ export default {
   },
 
   props: [
-    'roomLink'
+    'roomId'
   ]
 }
 </script>

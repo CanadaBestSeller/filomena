@@ -2,12 +2,11 @@
 
 
 
-
-
   <!-- IMPORTANT -->
   <!-- For optimization (and also Nuxt's middleware redirect issues), all the screens have to be in the same component -->
   <!-- We will order these screens in a logical if/else-if/else waterfall -->
-  <!-- SCREEN 1: LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
+  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the room doc -->
+  <!-- SCREEN 1: USER_LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
   <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the player list and chat -->
   <!-- SCREEN 4: GAME. v-else-if (room.status === 'GAME'). The host has initiated the game. Show the game, playerlist, and chat -->
@@ -15,20 +14,22 @@
 
 
 
-
-
-  <!-- SCREEN 1: LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
-  <div v-cloak v-if="firebase.user === 'loading'"><b-spinner type="grow" variant="success" /></div>
+  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the user status, don't show anything -->
+  <div v-cloak v-if="!firebase.roomDoc.status"><b-spinner type="grow" variant="success" /></div>
   <!-- END SCREEN 1: LOADING ============================================================================================-->
 
 
+
+  <!-- SCREEN 1: USER_LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
+  <div v-cloak v-else-if="firebase.user === 'loading'"><b-spinner type="grow" variant="light" /></div>
+  <!-- END SCREEN 1: LOADING ============================================================================================-->
 
 
 
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
   <div v-cloak v-else-if="!firebase.user">
 
-    <LobbyRoomLink :roomLink="roomLink"/>
+    <RoomLinkComponent :roomId="roomId"/>
 
     <div class="text-center bg-transparent">
       <div class="mx-5">
@@ -52,59 +53,32 @@
 
 
 
-
-
   <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the player list and chat -->
   <div v-cloak v-else-if="firebase.roomDoc.status === 'LOBBY'">
-    <LobbyRoomLink :roomLink="roomLink"/>
-
-    <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>
-    <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="message in firebase.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">
-        <b>{{ message.senderName }}: </b>{{ message.text }}
-      </p>
-    </b-card>
-
-    <h4 class="mx-3 mt-3 mb-2">oooPlayers</h4>
-    <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="player in firebase.roomDoc.players" :key="player.uid">
-        <b>{{ player.name }}</b> ({{ player.uid }})
-      </p>
-    </b-card>
-
-    <b-input-group>
-      <b-form-input v-model="chatUi.newMessageText" @keyup.enter="addChatMessage"/>
-      <b-input-group-append>
-        <b-button variant="primary" :disabled="!chatUi.newMessageText || chatUi.isLoading" type="text" @click="addChatMessage">{{ $t('general.sendMessage') }}</b-button>
-      </b-input-group-append>
-    </b-input-group>
+    <RoomLobbyComponent :roomId="roomId" :firebase="firebase"/>
   </div>
   <!-- END SCREEN 3: LOBBY =============================================================================================-->
 
 
 
-
-
   <!-- SCREEN 4: GAME. v-else-if (room.status === 'GAME'). The host has initiated the game. Show the game, playerlist, and chat -->
+  <div v-cloak v-else-if="firebase.roomDoc.status === 'GAME'">
+    <RoomGameComponent :roomId="roomId" :firebase="firebase"/>
+  </div>
   <!-- END SCREEN 4: GAME =============================================================================================-->
 
 
 
-
-
   <!-- SCREEN 5: ERROR. v-else. This is a catch-all screen which should never show up.-->
-  <div v-cloak v-else><b-spinner type="grow" variant="danger" /></div>
+  <div v-cloak v-else><b-spinner type="grow" variant="dark" /></div>
   <!-- END SCREEN 5: ERROR =============================================================================================-->
 </template>
 
 
 
-
-
 <script>
 import { auth, db } from '@/db/firebase'
-import { addChatroomMessage, addPlayer, createRoomReturnId } from '@/lib/firebase_utils'
-
+import { addPlayer } from '@/lib/firebase_utils'
 export default {
 
   async created () {
@@ -134,14 +108,12 @@ export default {
       },
 
       nameForm: { name: '', isLoading: false, errorMessage: '' },
-      chatUi: { isLoading: false, newMessageText: '', },
 
     }
   },
 
   computed: {
     roomId () { return this.$route.params.room.toUpperCase() },
-    roomLink () { return 'thumbs.up.railway.app/' + this.roomId },
     isNameFieldInvalid () { return !this.nameForm.name ? true : this.nameForm.name.length > 40 },
   },
 
@@ -164,16 +136,6 @@ export default {
       }
     },
 
-    async addChatMessage() {
-      const message = this.chatUi.newMessageText
-      this.chatUi.newMessageText = ""
-      this.chatUi.isLoading = true
-
-      await addChatroomMessage(this.firebase.roomDocRef, message, this.firebase.user.displayName, this.firebase.user.uid)
-      this.chatUi.isLoading = false
-    },
-
-    getMessageClass(sender) { return sender === this.firebase.user.uid ? 'text-primary' : 'text-dark' },
     goBack () { this.$router.push('/') },
     head () { return { title: this.roomId } },
   },
@@ -181,9 +143,7 @@ export default {
   watch: {
     // When the user is logged in, add as a player to the room
     'firebase.user' : async function(newUser, oldUser) {
-      if (newUser) {
-        await addPlayer(this.firebase.roomDocRef, this.firebase.user.displayName, this.firebase.user.uid)
-      }
+      if (newUser) { await addPlayer(this.firebase.roomDocRef, this.firebase.user.displayName, this.firebase.user.uid) }
     }
   }
 }
@@ -191,5 +151,4 @@ export default {
 
 <style>
 #form-input-name { height: 2.5rem; font-size: 1.2rem; }
-button[type="text"] { margin: 0; border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem; }
 </style>
