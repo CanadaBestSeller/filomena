@@ -1,12 +1,12 @@
 <template>
 
       <!-- If user is loading, don't show anything-->
-      <div v-cloak v-if="user === 'loading'"></div>
+      <div v-cloak v-if="user === 'loading'"><b-spinner type="danger" variant="primary" /></div>
 
 
       <!-- START IF USER ============================================================================================-->
       <!-- START IF USER ============================================================================================-->
-      <div v-else-if="user"></div>
+      <div v-else-if="user"><b-spinner type="grow" variant="warning" /></div>
       <!-- END IF USER =============================================================================================-->
       <!-- END IF USER =============================================================================================-->
 
@@ -43,7 +43,7 @@
 
 <script>
 import { auth } from '@/db/firebase.js'
-import { createRoomWithUniqueId } from '@/lib/firebase_utils'
+import { createRoomReturnId } from '@/lib/firebase_utils'
 export default {
 
   data () {
@@ -68,7 +68,7 @@ export default {
         // Need to wait for this critical step, otherwise the player will not have a displayName in the next screen
         await auth.currentUser.updateProfile({ displayName: this.form.name })
 
-        const roomId = await createRoomWithUniqueId(this.user.uid)
+        const roomId = await createRoomReturnId(this.user.uid)
         await this.$router.push('/' + roomId)
 
       } catch (error) {
@@ -95,7 +95,7 @@ export default {
      */
     user: async function(newUser, oldUser) {
       if (newUser && newUser !== 'loading' && oldUser === 'loading') {
-        const roomId = await createRoomWithUniqueId(this.user.uid)
+        const roomId = await createRoomReturnId(this.user.uid)
         await this.$router.push('/' + roomId)
       }
     }
