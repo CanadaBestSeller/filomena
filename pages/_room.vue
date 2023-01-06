@@ -1,5 +1,5 @@
 <template>
-  <LobbyRoomComponent />
+  <RoomMainComponent />
 </template>
 
 <script>

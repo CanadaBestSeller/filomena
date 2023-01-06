@@ -1,5 +1,5 @@
 <template>
-  <LobbyStartRoom />
+  <LandingStartRoom />
 </template>
 
 <script>

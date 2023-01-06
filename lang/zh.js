@@ -21,6 +21,7 @@ export default {
   },
   lobby: {
     letsStartTheParty: '🎊狂欢吧🎊',
+    startGame: '开始! 🎉',
   },
   form: {
     whatsYourName: '你叫什么名字?',

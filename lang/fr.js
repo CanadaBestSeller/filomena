@@ -21,6 +21,7 @@ export default {
   },
   lobby: {
     letsStartTheParty: 'Commençons la fête 🎉',
+    startGame: 'Commençons le jeu! 🎉',
   },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',
