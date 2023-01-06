@@ -55,7 +55,7 @@
 
 
   <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the player list and chat -->
-  <div v-cloak v-else-if="room.status === 'LOBBY'">
+  <div v-cloak v-else-if="firebase.roomDoc.status === 'LOBBY'">
     <LobbyRoomLink :roomLink="roomLink"/>
 
     <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>
@@ -65,7 +65,12 @@
       </p>
     </b-card>
 
-    <h4 class="mx-3 mt-3 mb-2">oooMembers</h4>
+    <h4 class="mx-3 mt-3 mb-2">oooPlayers</h4>
+    <b-card class="mb-3 overflow-auto" style="height: 20rem">
+      <p v-for="player in firebase.roomDoc.players" :key="player.uid">
+        <b>{{ player.name }}</b> ({{ player.uid }})
+      </p>
+    </b-card>
 
     <b-input-group>
       <b-form-input v-model="chatUi.newMessageText" @keyup.enter="addChatMessage"/>
@@ -88,7 +93,7 @@
 
 
   <!-- SCREEN 5: ERROR. v-else. This is a catch-all screen which should never show up.-->
-  <div v-cloak v-else class="bg-danger">ERROR - INVALID STATE</div>
+  <div v-cloak v-else><b-spinner type="grow" variant="danger" /></div>
   <!-- END SCREEN 5: ERROR =============================================================================================-->
 </template>
 
@@ -98,17 +103,25 @@
 
 <script>
 import { auth, db } from '@/db/firebase'
-import { addChatroomMessage } from '@/lib/firebase_utils'
+import { addChatroomMessage, addPlayer, createRoomReturnId } from '@/lib/firebase_utils'
 
 export default {
 
   async created () {
-    // Initialize current user
-    this.firebase.unsubscribe = auth.onAuthStateChanged( firebaseUser => (this.firebase.user = firebaseUser) )
-
     // Register firebase realtime stream listener on the entire root collection
     this.firebase.roomDocRef = db.collection('rooms').doc(this.roomId)
-    this.firebase.roomDocRef.onSnapshot({ includeMetadataChanges: true }, doc => { console.log(doc.data()); this.firebase.roomDoc = doc.data() })
+    this.firebase.roomDocRef.onSnapshot({ includeMetadataChanges: true }, doc => {
+      if (doc.exists) {
+        console.log('Room doc changed:')
+        console.log(doc.data())
+        this.firebase.roomDoc = doc.data()
+      } else {
+        this.$router.push({ name: 'index', params: { invalidRoomId: this.roomId } })
+      }
+    })
+
+    // Initialize current user
+    this.firebase.unsubscribe = auth.onAuthStateChanged( firebaseUser => (this.firebase.user = firebaseUser) )
   },
 
   data () {
@@ -123,9 +136,6 @@ export default {
       nameForm: { name: '', isLoading: false, errorMessage: '' },
       chatUi: { isLoading: false, newMessageText: '', },
 
-      room: {
-        status: 'LOBBY'
-      }
     }
   },
 
@@ -137,13 +147,14 @@ export default {
 
   methods: {
     async guestSignInAndEnterRoom () {
+      console.log('guestSignInAndEnterRoom')
       try {
         this.nameForm.isLoading = true
         this.nameForm.errorMessage = null
 
         await auth.signInAnonymously()
+        this.firebase.user.displayName = this.nameForm.name  // The below line only updates the db, we have to manually update our in-memory displayName
         await auth.currentUser.updateProfile({ displayName: this.nameForm.name })
-        this.firebase.user.displayName = this.nameForm.name  // The above line only updates the db, we have to manually update our in-memory displayName
 
       } catch (error) {
         this.nameForm.errorMessage = error.message
@@ -154,8 +165,6 @@ export default {
     },
 
     async addChatMessage() {
-      console.log(this.firebase)
-
       const message = this.chatUi.newMessageText
       this.chatUi.newMessageText = ""
       this.chatUi.isLoading = true
@@ -167,6 +176,15 @@ export default {
     getMessageClass(sender) { return sender === this.firebase.user.uid ? 'text-primary' : 'text-dark' },
     goBack () { this.$router.push('/') },
     head () { return { title: this.roomId } },
+  },
+
+  watch: {
+    // When the user is logged in, add as a player to the room
+    'firebase.user' : async function(newUser, oldUser) {
+      if (newUser) {
+        await addPlayer(this.firebase.roomDocRef, this.firebase.user.displayName, this.firebase.user.uid)
+      }
+    }
   }
 }
 </script>

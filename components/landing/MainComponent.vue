@@ -20,6 +20,17 @@
 
 <script>
 export default {
+  created() {
+    if (this.$route.params.invalidRoomId) {
+      this.$bvToast.toast(`oooRoom ${this.$route.params.invalidRoomId} does not exist!`, {
+        title: '😬',
+        variant: 'danger',
+        toaster: 'b-toaster-top-center',
+        autoHideDelay: 5000,
+      })
+    }
+  },
+
   methods: {
     joinParty () {
       this.$router.push('/enter')
