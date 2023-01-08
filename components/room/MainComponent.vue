@@ -5,16 +5,16 @@
   <!-- IMPORTANT -->
   <!-- For optimization (and also Nuxt's middleware redirect issues), all the screens have to be in the same component -->
   <!-- We will order these screens in a logical if/else-if/else waterfall -->
-  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the room doc -->
+  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the room status, don't show anything -->
   <!-- SCREEN 1: USER_LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
-  <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the player list and chat -->
-  <!-- SCREEN 4: GAME. v-else-if (room.status === 'GAME'). The host has initiated the game. Show the game, playerlist, and chat -->
+  <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the lobby -->
+  <!-- SCREEN 4: GAME. v-else-if (room.status === 'GAME'). The host has initiated the game. Show the game -->
   <!-- SCREEN 5: ERROR. v-else. This is a catch-all screen which should never show up.-->
 
 
 
-  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the user status, don't show anything -->
+  <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the room status, don't show anything -->
   <div v-cloak v-if="!firebase.roomDoc.status"><b-spinner type="grow" variant="success" /></div>
   <!-- END SCREEN 1: LOADING ============================================================================================-->
 
@@ -53,7 +53,7 @@
 
 
 
-  <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the player list and chat -->
+  <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the lobby -->
   <div v-cloak v-else-if="firebase.roomDoc.status === 'LOBBY'">
     <RoomLobbyComponent :roomId="roomId" :firebase="firebase"/>
   </div>
@@ -78,7 +78,7 @@
 
 <script>
 import { auth, db } from '@/db/firebase'
-import { addPlayer } from '@/lib/firebase_utils'
+import { addPlayer } from '@/lib/firebase_gateway'
 export default {
 
   async created () {
@@ -119,7 +119,6 @@ export default {
 
   methods: {
     async guestSignInAndEnterRoom () {
-      console.log('guestSignInAndEnterRoom')
       try {
         this.nameForm.isLoading = true
         this.nameForm.errorMessage = null

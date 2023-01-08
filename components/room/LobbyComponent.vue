@@ -24,12 +24,12 @@
     </b-input-group>
 
 
-    <b-button class="shadow" size="lg" @click="joinParty()" variant="success">{{ $t('lobby.startGame') }}</b-button>
+    <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
   </div>
 </template>
 
 <script>
-import { addChatroomMessage } from '@/lib/firebase_utils'
+import { addChatroomMessage, startGame } from '~/lib/firebase_gateway'
 
 export default {
   data() {
@@ -51,6 +51,10 @@ export default {
 
       await addChatroomMessage(this.firebase.roomDocRef, message, this.firebase.user.displayName, this.firebase.user.uid)
       this.chatUi.isLoading = false
+    },
+
+    async startGame() {
+      await startGame(this.firebase.roomDocRef, this.$t)
     },
 
     getMessageClass(sender) { return sender === this.firebase.user.uid ? 'text-primary' : 'text-dark' },
