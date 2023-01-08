@@ -38,4 +38,7 @@ export default {
     chatroom: 'Salon',
     sendMessage: 'Envoyer ✈️',
   },
+  questions: {
+    fun_001_afterLongDayAtWork: 'Après une longue journée de travail, que va faire {0}?'
+  },
 }

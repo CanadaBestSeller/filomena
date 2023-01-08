@@ -43,7 +43,7 @@
 
 <script>
 import { auth } from '~/db/firebase.js'
-import { createRoomReturnId } from '~/lib/firebase_utils'
+import { createRoomReturnId } from '~/lib/firebase_gateway'
 export default {
 
   data () {

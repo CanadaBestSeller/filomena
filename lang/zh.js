@@ -38,4 +38,7 @@ export default {
     chatroom: '聊天室',
     sendMessage: '发 ✈️',
   },
+  questions: {
+    fun_001_afterLongDayAtWork: '经过漫长的一天工作，{0}如何放松？'
+  },
 }
