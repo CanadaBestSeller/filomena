@@ -53,7 +53,7 @@ export default {
     }
   },
 
-  created() { this.firebaseUnsubscribe = auth.onAuthStateChanged( firebaseUser => (this.user = firebaseUser) ) },
+  created() { this.fUnsubscribe = auth.onAuthStateChanged( firebaseUser => (this.user = firebaseUser) ) },
 
   computed: { isNameFieldInvalid () { return !this.form.name ? true : this.form.name.length > 40 }, },
 

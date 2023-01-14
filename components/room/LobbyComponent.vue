@@ -4,14 +4,14 @@
 
     <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>
     <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="message in firebase.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">
+      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">
         <b>{{ message.senderName }}: </b>{{ message.text }}
       </p>
     </b-card>
 
     <h4 class="mx-3 mt-3 mb-2">oooPlayers</h4>
     <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="player in firebase.roomDoc.players" :key="player.uid">
+      <p v-for="player in f.roomDoc.players" :key="player.uid">
         <b>{{ player.name }}</b> ({{ player.uid }})
       </p>
     </b-card>
@@ -40,7 +40,7 @@ export default {
 
   props: [
     'roomId',
-    'firebase',
+    'f',
   ],
 
   methods: {
@@ -49,15 +49,15 @@ export default {
       this.chatUi.newMessageText = ""
       this.chatUi.isLoading = true
 
-      await addChatroomMessage(this.firebase.roomDocRef, message, this.firebase.user.displayName, this.firebase.user.uid)
+      await addChatroomMessage(this.f.roomDocRef, message, this.f.user.displayName, this.f.user.uid)
       this.chatUi.isLoading = false
     },
 
     async startGame() {
-      await startGame(this.firebase.roomDocRef, this.$t)
+      await startGame(this.f.roomDocRef, this.$t)
     },
 
-    getMessageClass(sender) { return sender === this.firebase.user.uid ? 'text-primary' : 'text-dark' },
+    getMessageClass(sender) { return sender === this.f.user.uid ? 'text-primary' : 'text-dark' },
   }
 }
 </script>

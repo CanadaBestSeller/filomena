@@ -3,9 +3,9 @@
     <RoomLinkComponent :roomId="roomId"/>
 
 
-    <div v-cloak v-if="firebase.roomDoc.gameStatus === 'ANSWER' && !answered">
+    <div v-cloak v-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
       <h1 class="mt-5 mb-2">
-        {{ $t(firebase.roomDoc.questions[firebase.roomDoc.currentQuestionIndex].id) }}
+        {{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}
       </h1>
 
       <h2><b-badge :variant="answerTimerVariant">{{ answerTimerCount }}</b-badge></h2>
@@ -19,26 +19,26 @@
     </div>
 
 
-    <div v-cloak v-else-if="firebase.roomDoc.gameStatus === 'ANSWER' && answered">
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered">
       <h1 class="mt-5 mb-2">
         oooWaiting for others to answer...
       </h1>
     </div>
 
 
-    <div v-cloak v-else-if="firebase.roomDoc.gameStatus === 'VOTE' && !voted">
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && !voted">
       <h1 class="mt-5 mb-2">
-        {{ $t(firebase.roomDoc.questions[firebase.roomDoc.currentQuestionIndex].id) }}
+        {{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}
       </h1>
 
       <h2><b-badge :variant="voteTimerVariant">{{ voteTimerCount }}</b-badge></h2>
 
       <div>
         <b-form-group v-slot="{ ariaDescribedby }">
-          <b-form-radio v-for="answer in firebase.roomDoc.questions[firebase.roomDoc.currentQuestionIndex].answers" :key="answer.uid"
+          <b-form-radio v-for="answer in f.roomDoc.questions[f.roomDoc.currentQuestionIndex].answers" :key="answer.uid"
                         v-model="voteRadioOption" :aria-describedby="ariaDescribedby" name="vote-group"
                         :value="answer.uid">
-<!--            :disabled="answer.uid === firebase.user.uid">-->
+<!--            :disabled="answer.uid === f.user.uid">-->
                           {{ answer.text }}
           </b-form-radio>
         </b-form-group>
@@ -50,15 +50,15 @@
     </div>
 
 
-    <div v-cloak v-else-if="firebase.roomDoc.gameStatus === 'VOTE' && voted">
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && voted">
       <h1 class="mt-5 mb-2">
         oooWaiting for others to vote...
       </h1>
     </div>
 
-<!--    <div v-cloak v-else-if="firebase.roomDoc.gameStatus === 'SUMMARY'">-->
+<!--    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY'">-->
 <!--      <h1 class="mt-5 mb-2">-->
-<!--        {{ $t(firebase.roomDoc.questions[0].id) }}-->
+<!--        {{ $t(f.roomDoc.questions[0].id) }}-->
 <!--      </h1>-->
 
 <!--      <h2><b-badge :variant="answerTimerVariant">{{ answerTimerCount }}</b-badge></h2>-->
@@ -72,7 +72,7 @@
 <!--    </div>-->
 
 
-    <div v-cloak v-else-if="firebase.roomDoc.gameStatus === 'FINISHED'"><h1>🎊</h1></div>
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'FINISHED'"><h1>🎊</h1></div>
 
     <div v-cloak v-else><h1>😬😬😬</h1></div>
 
@@ -88,15 +88,15 @@ export default {
     setInterval(() => {this.totalPlayTime += 900; console.log(`incremented totalPlayTime ${this.totalPlayTime}`) }, 1000);
 
     if (!this.answered) {
-      this.answerTimerCount = (this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredAnswerTimeLimitSec) - getCurrentTimeEpochSec()
+      this.answerTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) - getCurrentTimeEpochSec()
     }
 
-    if (this.firebase.roomDoc.gameStatus === 'VOTE') {
-      this.voteTimerCount = (this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
+    if (this.f.roomDoc.gameStatus === 'VOTE') {
+      this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
     }
 
-    if (this.firebase.roomDoc.gameStatus === 'SUMMARY') {
-      this.voteTimerCount = (this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
+    if (this.f.roomDoc.gameStatus === 'SUMMARY') {
+      this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
     }
   },
 
@@ -116,7 +116,7 @@ export default {
   computed: {
     answerTimerVariant() { return this.answerTimerCount <= 5 ? 'danger' : this.answerTimerCount <= 15 ? 'warning' : 'success' },
     answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
-    answered() { return this.firebase.roomDoc.questions[this.firebase.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.firebase.user.uid)},
+    answered() { return this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.f.user.uid)},
 
     voteTimerVariant() { return this.voteTimerCount <= 5 ? 'info' : this.voteTimerCount <= 15 ? 'info' : 'info' },
     voteTimerEmoji() { return this.voteTimerCount <= 5 ? '😱' : this.voteTimerCount <= 15 ? '😬' : '🤔' },
@@ -124,31 +124,31 @@ export default {
 
   props: [
     'roomId',
-    'firebase',
+    'f',
   ],
 
   methods: {
     async answerQuestionLocally() {
       const answerText = this.answerUi.newAnswerText
       this.answerUi.newAnswerText = ''
-      await answerQuestion(this.firebase.roomDocRef, answerText, this.firebase.user.uid)
+      await answerQuestion(this.f.roomDocRef, answerText, this.f.user.uid)
       this.answerTimerCount = -1
     },
 
     async voteLocally() {
-      await voteForAnswer(this.firebase.roomDocRef, this.voteRadioOption)
+      await voteForAnswer(this.f.roomDocRef, this.voteRadioOption)
     },
 
     getCurrentQuestion() {
-      const currentQuestionIndex = this.firebase.roomDoc.currentQuestionIndex
-      return this.firebase.roomDoc.questions[currentQuestionIndex]
+      const currentQuestionIndex = this.f.roomDoc.currentQuestionIndex
+      return this.f.roomDoc.questions[currentQuestionIndex]
     }
   },
 
   watch: {
     answerTimerCount: {
       handler(value) {
-        if (this.firebase.roomDoc.gameStatus === 'ANSWER' && value > 0) {
+        if (this.f.roomDoc.gameStatus === 'ANSWER' && value > 0) {
           setTimeout(() => { this.answerTimerCount-- }, 1000)
         }
       },
@@ -157,7 +157,7 @@ export default {
 
     voteTimerCount: {
       handler(value) {
-        if (this.firebase.roomDoc.gameStatus === 'VOTE' && value > 0) {
+        if (this.f.roomDoc.gameStatus === 'VOTE' && value > 0) {
           setTimeout(() => { this.voteTimerCount-- }, 1000)
         }
       },
@@ -166,15 +166,15 @@ export default {
 
     totalPlayTime: {  // Hack to check the time every second
       async handler(newPlayTime, oldPlayTime) {
-        if (this.firebase.roomDoc.gameStatus === 'ANSWER' && getCurrentTimeEpochSec() >= this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredAnswerTimeLimitSec) {
+        if (this.f.roomDoc.gameStatus === 'ANSWER' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) {
           console.log("ANSWER EXPIRED")
-          await transitionToVote(this.firebase.roomDocRef)
-          this.voteTimerCount = (this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
+          await transitionToVote(this.f.roomDocRef)
+          this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
         }
 
-        if (this.firebase.roomDoc.gameStatus === 'VOTE' && getCurrentTimeEpochSec() >= this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredVoteTimeLimitSec) {
-          await transitionToSummary(this.firebase.roomDocRef)
-          this.summaryTimerCount = (this.firebase.roomDoc.currentGameStatusTimestampEpochSec + this.firebase.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
+        if (this.f.roomDoc.gameStatus === 'VOTE' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) {
+          await transitionToSummary(this.f.roomDocRef)
+          this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
         }
       },
       immediate: true // This ensures the watcher is triggered upon creation

@@ -15,19 +15,19 @@
 
 
   <!-- SCREEN 0: ROOM_LOADING. v-if (!room). When firebase has not returned the room status, don't show anything -->
-  <div v-cloak v-if="!firebase.roomDoc.status"><b-spinner type="grow" variant="success" /></div>
+  <div v-cloak v-if="!f.roomDoc.status"><b-spinner type="grow" variant="success" /></div>
   <!-- END SCREEN 1: LOADING ============================================================================================-->
 
 
 
   <!-- SCREEN 1: USER_LOADING. v-if (user === 'loading'). When firebase has not returned the user status, don't show anything -->
-  <div v-cloak v-else-if="firebase.user === 'loading'"><b-spinner type="grow" variant="light" /></div>
+  <div v-cloak v-else-if="f.user === 'loading'"><b-spinner type="grow" variant="light" /></div>
   <!-- END SCREEN 1: LOADING ============================================================================================-->
 
 
 
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
-  <div v-cloak v-else-if="!firebase.user">
+  <div v-cloak v-else-if="!f.user">
 
     <RoomLinkComponent :roomId="roomId"/>
 
@@ -54,16 +54,16 @@
 
 
   <!-- SCREEN 3: LOBBY. v-else-if (room.status === 'LOBBY'). At this point in the waterfall the user is logged in. Show the lobby -->
-  <div v-cloak v-else-if="firebase.roomDoc.status === 'LOBBY'">
-    <RoomLobbyComponent :roomId="roomId" :firebase="firebase"/>
+  <div v-cloak v-else-if="f.roomDoc.status === 'LOBBY'">
+    <RoomLobbyComponent :roomId="roomId" :f="f"/>
   </div>
   <!-- END SCREEN 3: LOBBY =============================================================================================-->
 
 
 
   <!-- SCREEN 4: GAME. v-else-if (room.status === 'GAME'). The host has initiated the game. Show the game, player list, and chat -->
-  <div v-cloak v-else-if="firebase.roomDoc.status === 'GAME'">
-    <RoomGameComponent :roomId="roomId" :firebase="firebase"/>
+  <div v-cloak v-else-if="f.roomDoc.status === 'GAME'">
+    <RoomGameComponent :roomId="roomId" :f="f"/>
   </div>
   <!-- END SCREEN 4: GAME =============================================================================================-->
 
@@ -83,25 +83,25 @@ export default {
 
   async created () {
     // Register firebase realtime stream listener on the entire root collection
-    this.firebase.roomDocRef = db.collection('rooms').doc(this.roomId)
-    this.firebase.roomDocRef.onSnapshot({ includeMetadataChanges: true }, doc => {
+    this.f.roomDocRef = db.collection('rooms').doc(this.roomId)
+    this.f.roomDocRef.onSnapshot({ includeMetadataChanges: true }, doc => {
       if (doc.exists) {
         console.log('Room doc changed:')
         console.log(doc.data())
-        this.firebase.roomDoc = doc.data()
+        this.f.roomDoc = doc.data()
       } else {
         this.$router.push({ name: 'index', params: { invalidRoomId: this.roomId } })
       }
     })
 
     // Initialize current user
-    this.firebase.unsubscribe = auth.onAuthStateChanged( firebaseUser => (this.firebase.user = firebaseUser) )
+    this.f.unsubscribe = auth.onAuthStateChanged( firebaseUser => (this.f.user = firebaseUser) )
   },
 
   data () {
     return {
 
-      firebase: {
+      f: {
         user: 'loading', /* loading is the default value, since we don't know when firebase will return a user/null object */ unsubscribe: null,
         roomDocRef: null,
         roomDoc: {},  // Empty object makes v-for directives happy instead of null
@@ -124,7 +124,7 @@ export default {
         this.nameForm.errorMessage = null
 
         await auth.signInAnonymously()
-        this.firebase.user.displayName = this.nameForm.name  // The below line only updates the db, we have to manually update our in-memory displayName
+        this.f.user.displayName = this.nameForm.name  // The below line only updates the db, we have to manually update our in-memory displayName
         await auth.currentUser.updateProfile({ displayName: this.nameForm.name })
 
       } catch (error) {
@@ -141,8 +141,8 @@ export default {
 
   watch: {
     // When the user is logged in, add as a player to the room
-    'firebase.user' : async function(newUser, oldUser) {
-      if (newUser) { await addPlayer(this.firebase.roomDocRef, this.firebase.user.displayName, this.firebase.user.uid) }
+    'f.user' : async function(newUser, oldUser) {
+      if (newUser) { await addPlayer(this.f.roomDocRef, this.f.user.displayName, this.f.user.uid) }
     }
   }
 }
