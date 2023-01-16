@@ -2,12 +2,19 @@
   <div>
     <RoomLinkComponent :roomId="roomId"/>
 
-    <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>
-    <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">
-        <b>{{ message.senderName }}: </b>{{ message.text }}
-      </p>
-    </b-card>
+<!--    <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>-->
+<!--    <b-card class="mb-3 overflow-auto" style="height: 20rem">-->
+<!--      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">-->
+<!--        <b>{{ message.senderName }}: </b>{{ message.text }}-->
+<!--      </p>-->
+<!--    </b-card>-->
+
+<!--    <b-input-group>-->
+<!--      <b-form-input v-model="chatUi.newMessageText" @keyup.enter="addChatMessage"/>-->
+<!--      <b-input-group-append>-->
+<!--        <b-button variant="primary" :disabled="!chatUi.newMessageText || chatUi.isLoading" type="text" @click="addChatMessage">{{ $t('general.sendMessage') }}</b-button>-->
+<!--      </b-input-group-append>-->
+<!--    </b-input-group>-->
 
     <h4 class="mx-3 mt-3 mb-2">oooPlayers</h4>
     <b-card class="mb-3 overflow-auto" style="height: 20rem">
@@ -15,14 +22,6 @@
         <b>{{ player.name }}</b> ({{ player.uid }})
       </p>
     </b-card>
-
-    <b-input-group>
-      <b-form-input v-model="chatUi.newMessageText" @keyup.enter="addChatMessage"/>
-      <b-input-group-append>
-        <b-button variant="primary" :disabled="!chatUi.newMessageText || chatUi.isLoading" type="text" @click="addChatMessage">{{ $t('general.sendMessage') }}</b-button>
-      </b-input-group-append>
-    </b-input-group>
-
 
     <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
   </div>
