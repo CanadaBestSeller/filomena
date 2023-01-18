@@ -5,6 +5,8 @@ $theme-colors: (
   //"success": yellow,
 );
 
+$enable-responsive-font-sizes: true;
+
 $font-family-sans-serif: "Cera Round Pro Medium";
 $btn-disabled-opacity: .35;
 
@@ -27,11 +29,10 @@ body {
 .btn {
   font-family: "Cera Round Pro Bold", sans-serif;
   border-radius: 1rem;
-  margin: 0.2rem;
 }
 
 
-h1 { font-size: 4rem; }
+h1 { @include font-size(5rem)}
 h2 { font-size: 3rem; }
 h3 { font-size: 2rem; }
 h4 { font-size: 1.5rem; }

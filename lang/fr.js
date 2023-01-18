@@ -11,7 +11,7 @@ export default {
     blurb: 'Amusez-toi beaucoup avec tes amis ;)', // TODO translate to "for the office"
     players: '🤠 3 à 12 joueurs',
     time: '⏱️ 12 ou 25 minutes',
-    devices: '📱 Phone or Ordinateur 💻',
+    devices: '📱 Phone ou Ordinateur 💻',
   },
   howToPlay: {
     howToPlay: 'Comment Jouer',
