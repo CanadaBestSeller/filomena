@@ -23,7 +23,9 @@
       </p>
     </b-card>
 
-    <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
+    <b-button v-cloak v-if="f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
+    <p v-else>oooWaiting for host to start game...</p>
+
   </div>
 </template>
 
