@@ -1,5 +1,5 @@
 <template>
-  <RoomMainComponent />
+  <RoomMainComponent :roomId="$nuxt.$route.path.substring(1).toUpperCase()" />
 </template>
 
 <script>

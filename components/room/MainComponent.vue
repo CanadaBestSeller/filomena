@@ -113,7 +113,6 @@ export default {
   },
 
   computed: {
-    roomId () { return this.$route.params.room.toUpperCase() },
     isNameFieldInvalid () { return !this.nameForm.name ? true : this.nameForm.name.length > 40 },
   },
 
@@ -144,7 +143,11 @@ export default {
     'f.user' : async function(newUser, oldUser) {
       if (newUser) { await addPlayer(this.f.roomDocRef, this.f.user.displayName, this.f.user.uid) }
     }
-  }
+  },
+
+  props: [
+    'roomId'
+  ]
 }
 </script>
 
