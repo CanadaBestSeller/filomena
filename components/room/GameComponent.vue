@@ -12,8 +12,8 @@
 
     <!-- ANSWER SCREEN, entering answer-->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
-      <h1 class="mt-5 mb-2">
-        {{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}
+      <h1>
+        {{ currentQuestion }}
       </h1>
 
       <h2><b-badge :variant="answerTimerVariant">{{ answerTimerCount }}</b-badge></h2>
@@ -29,7 +29,7 @@
 
     <!-- ANSWER SCREEN, entered answer-->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered">
-      <h1 class="mt-5 mb-2">
+      <h1>
         oooWaiting for others to answer...
       </h1>
     </div>
@@ -37,8 +37,8 @@
 
     <!-- VOTE SCREEN, not voted -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && !voted">
-      <h1 class="mt-5 mb-2">
-        {{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}
+      <h1>
+        {{ currentQuestion }}
       </h1>
 
       <h2><b-badge :variant="voteTimerVariant">{{ voteTimerCount }}</b-badge></h2>
@@ -52,16 +52,16 @@
           </b-form-radio>
         </b-form-group>
 
-        <div class="mt-3">Selected: <strong>{{ voteRadioOption }}</strong></div>
+        <div>Selected: <strong>{{ voteRadioOption }}</strong></div>
       </div>
 
-      <b-button variant="primary" @click="voteLocally">oooVote</b-button>
+      <b-button variant="primary" :disabled="!voteRadioOption" @click="voteLocally">oooVote</b-button>
     </div>
 
 
     <!-- VOTE SCREEN, voted -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && voted">
-      <h1 class="mt-5 mb-2">
+      <h1>
         oooWaiting for others to vote...
       </h1>
     </div>
@@ -69,7 +69,7 @@
 
     <!-- SUMMARY SCREEN, no vote at all -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0">
-      <h3>{{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}</h3>
+      <h3>{{ currentQuestion }}</h3>
       <h1>oooThere were no votes!</h1>
       <h2><b-badge :variant="summaryTimerVariant">{{ summaryTimerCount }}</b-badge></h2>
     </div>
@@ -77,7 +77,7 @@
 
     <!-- SUMMARY SCREEN, one winning vote -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 1">
-      <h3>{{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}</h3>
+      <h3>{{ currentQuestion }}</h3>
       <h5>oooThe Winning Answer Is....</h5>
       <h1>{{ currentWinningAnswers[0].text }}</h1>
       <h4>{{ currentWinningAnswers[0].votes }} oooVotes</h4>
@@ -88,7 +88,7 @@
 
     <!-- SUMMARY SCREEN, many winning votes -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length > 1">
-      <h3>{{ $t(f.roomDoc.questions[f.roomDoc.currentQuestionIndex].id) }}</h3>
+      <h3>{{ currentQuestion }}</h3>
       <h5>oooIt's a tie!</h5>
 
       <b-list-group>
@@ -143,13 +143,18 @@ export default {
 
       voted: false,  // This should really be kept at the firestore level, but if someone wants to refresh and vote again, whatevs
       voteTimerCount: -1,
-      voteRadioOption: '',
+      voteRadioOption: null,
 
       summaryTimerCount: -1,
     }
   },
 
   computed: {
+    currentQuestion() {
+      const currentQuestion = this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex]
+      return this.$t(currentQuestion.id, [currentQuestion.subject1, currentQuestion.subject2])
+    },
+
     answerTimerVariant() { return this.answerTimerCount <= 5 ? 'danger' : this.answerTimerCount <= 15 ? 'warning' : 'success' },
     answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
     answered() { return this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.f.user.uid)},
@@ -230,7 +235,6 @@ export default {
     'f.roomDoc.gameStatus': {  // Transition based on participation (e.g. All players have answered)
       async handler(newStatus, oldStatus) {
         if (oldStatus === 'ANSWER' && newStatus === 'VOTE') {
-          console.log("STATUS")
           await transitionAfterAnswer(this.f.roomDocRef)
           this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
         }
@@ -239,6 +243,8 @@ export default {
           await transitionAfterVote(this.f.roomDocRef)
           this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
           this.voted = false
+          this.voteTimerCount = -1
+          this.voteRadioOption = null
         }
       }
     },
@@ -254,6 +260,8 @@ export default {
           await transitionAfterVote(this.f.roomDocRef)
           this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
           this.voted = false
+          this.voteTimerCount = -1
+          this.voteRadioOption = null
         }
 
         if (this.f.roomDoc.gameStatus === 'SUMMARY' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) {

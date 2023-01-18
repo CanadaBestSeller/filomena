@@ -55,7 +55,7 @@ export default {
     },
 
     async startGame() {
-      await startGame(this.f.roomDocRef, this.$t)
+      await startGame(this.f.roomDocRef, this.f.roomDoc.players)
     },
 
     getMessageClass(sender) { return sender === this.f.user.uid ? 'text-primary' : 'text-dark' },
