@@ -23,8 +23,14 @@
       </p>
     </b-card>
 
-    <b-button v-cloak v-if="f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
-    <p v-else>oooWaiting for host to start game...</p>
+
+    <!-- TODO remove this after styling looks good -->
+    <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
+<!--    <b-button v-cloak v-if="f.roomDoc.players.length < 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" disabled variant="success">oooWe need at least 3 players to start game</b-button>-->
+<!--    <b-button v-cloak v-else-if="f.roomDoc.players.length >= 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>-->
+<!--    <p v-cloak v-else-if="f.roomDoc.players.length < 3">oooWe need at least 3 players to start game</p>-->
+<!--    <p v-cloak v-else>oooWaiting for host to start game...</p>-->
+
 
   </div>
 </template>
