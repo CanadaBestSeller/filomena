@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <!--  Center the landing component-->
-    <b-jumbotron class="text-center m-0 bg-transparent">
-      <h1 class="mt-5 mb-2">
-        {{ $t('landing.title') }}
-      </h1>
+  <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center">
 
-      <h5 class="mx-4 mb-4">{{ $t('landing.subtitle') }}</h5>
+    <b-container class="mt-5">
+      <b-row><b-col><h1 class="text-center">{{ $t('landing.title') }}</h1></b-col></b-row>
+      <b-row><b-col><h5 class="text-center">{{ $t('landing.subtitle') }}</h5></b-col></b-row>
 
-      <b-button class="shadow" size="lg" @click="joinParty()" variant="primary">{{ $t('landing.joinParty') }}</b-button>
-      <b-button class="shadow" size="lg" @click="startParty()" variant="outline-success">{{ $t('landing.startParty') }}</b-button>
-    </b-jumbotron>
+      <b-row class="my-4" align-h="center" no-gutters>
+        <b-col cols="auto"><b-button class="shadow mx-1" size="lg" @click="joinParty()" variant="primary">{{ $t('landing.joinParty') }}</b-button></b-col>
+        <b-col cols="auto"><b-button class="shadow mx-1" size="lg" @click="startParty()" variant="outline-success">{{ $t('landing.startParty') }}</b-button></b-col>
+      </b-row>
+    </b-container>
 
     <LandingIntroComponent />
     <LandingHowToPlay />
