@@ -1,5 +1,5 @@
 <template>
-  <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center">
+  <div>
 
     <b-container class="mt-5">
       <b-row><b-col><h1 class="text-center">{{ $t('landing.title') }}</h1></b-col></b-row>

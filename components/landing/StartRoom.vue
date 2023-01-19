@@ -7,26 +7,27 @@
   <!-- START IF NOT USER ========================================================================================-->
   <!-- START IF NOT USER ========================================================================================-->
   <div v-else-if="!user">
-    <div class="text-center bg-transparent">
-      <h3 class="mb-4">
-        {{ $t('lobby.letsStartTheParty') }}
-      </h3>
-      <div class="mx-5">
-        <b-form @submit.prevent="guestSignInAndCreateRoom">
-          <b-form-group id="form-group-name lg" :label="$t('form.whatsYourName')" label-for="form-input-name">
-            <b-form-input id="form-input-name" v-model="form.name" class="text-center" :placeholder="$t('form.whatsYourNameHint')" required />
-            <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
-          </b-form-group>
 
-          <b-button class="shadow" size="lg" variant="outline-danger" @click="goBack()">
-            {{ $t('general.back') }}
-          </b-button>
+    <h2>{{ $t('lobby.letsStartTheParty') }}</h2>
 
-          <b-button v-if="form.isLoading" class="shadow" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
-          <b-button v-else class="shadow" size="lg" variant="success" type="submit" :disabled="isNameFieldInvalid">{{ $t('general.confirmName') }}</b-button>
-        </b-form>
-      </div>
-    </div>
+    <b-form @submit.prevent="guestSignInAndCreateRoom">
+      <b-form-group class="my-3 text-center" id="form-group-name" :label="$t('form.whatsYourName')" label-for="form-input-name">
+        <b-form-input id="form-input-name" v-model="form.name" class="text-center" :placeholder="$t('form.whatsYourNameHint')" required />
+        <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-container>
+        <b-row no-gutters align-h="center">
+          <b-col cols="auto"><b-button class="shadow" size="lg" variant="outline-danger" @click="goBack()">{{ $t('general.back') }}</b-button></b-col>
+
+          <b-col cols="auto">
+            <b-button v-if="form.isLoading" class="shadow" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
+            <b-button v-else class="shadow" size="lg" variant="success" type="submit" :disabled="isNameFieldInvalid">{{ $t('general.confirmName') }}</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-form>
+
   </div>
   <!-- END IF NOT USER =========================================================================================-->
   <!-- END IF NOT USER =========================================================================================-->
