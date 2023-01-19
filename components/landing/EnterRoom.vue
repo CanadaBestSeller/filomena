@@ -1,22 +1,27 @@
 <template>
-  <div class="text-center bg-transparent">
-    <h3>{{ $t('form.enterTheCode') }}</h3>
-    <div class="mx-5">
-      <b-form @submit.prevent="guestSignInAndJoinRoom">
-        <b-form-group id="form-group-code mx-5">
-          <b-form-input id="form-input-code" class="text-center"  v-model="form.code" :placeholder="$t('form.enterTheCodeHint')" required oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"/>
-          <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
-        </b-form-group>
 
-        <b-button class="shadow" size="lg" variant="outline-danger" @click="goBack()">
-          {{ $t('general.back') }}
-        </b-button>
+  <div>
+    <h3 class="text-center">{{ $t('form.enterTheCode') }}</h3>
 
-        <b-button v-if="form.isLoading" class="shadow" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
-        <b-button v-else class="shadow" size="lg" variant="primary" type="submit" :disabled="isCodeFieldInvalid">{{ $t('general.confirm') }}</b-button>
-      </b-form>
-    </div>
+    <b-form @submit.prevent="guestSignInAndJoinRoom">
+
+      <b-form-group id="form-group-code">
+        <b-form-input id="form-input-code" class="text-center" maxLength="4" v-model="form.code" :placeholder="$t('form.enterTheCodeHint')" required oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);"/>
+        <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-container>
+        <b-row align-h="center" no-gutters>
+          <b-col cols="auto"><b-button class="shadow mx-1" size="lg" variant="outline-danger" @click="goBack()">{{ $t('general.back') }}</b-button></b-col>
+          <b-col cols="auto">
+            <b-button v-if="form.isLoading" class="shadow mx-1" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
+            <b-button v-else class="shadow mx-1" size="lg" variant="primary" type="submit" :disabled="isCodeFieldInvalid">{{ $t('general.confirm') }}</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-form>
   </div>
+
 </template>
 
 <script>

@@ -6,6 +6,7 @@ $theme-colors: (
 );
 
 $enable-responsive-font-sizes: true;
+$rfs-breakpoint: 800px;
 
 $font-family-sans-serif: "Cera Round Pro Medium";
 $btn-disabled-opacity: .35;
@@ -32,11 +33,12 @@ body {
 }
 
 
-h1 { @include font-size(5rem)}
-h2 { font-size: 3rem; }
-h3 { font-size: 2rem; }
+h1 { @include font-size(5rem) }
+h2 { @include font-size(3rem) }
+h3 { @include font-size(2rem) }
 h4 { font-size: 1.5rem; }
-h5, label { font-size: 1.2rem; }
+h5, { font-size: 1.2rem; }
+label { font-size: 1.5rem; }
 
 [v-cloak] { display: none; } /*Prevents flashing - component templates with v-cloak will be hidden until rendered*/
 

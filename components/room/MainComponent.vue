@@ -29,25 +29,26 @@
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
   <div v-cloak v-else-if="!f.user">
 
-    <RoomLinkComponent :roomId="roomId"/>
+    <h2 class="my-3 text-center">{{ $t('lobby.welcomeToRoom', [roomId]) }}</h2>
 
-    <div class="text-center bg-transparent">
-      <div class="mx-5">
-        <b-form @submit.prevent="guestSignInAndEnterRoom">
-          <b-form-group id="form-group-name lg" :label="$t('form.whatsYourName')" label-for="form-input-name">
-            <b-form-input id="form-input-name" v-model="nameForm.name" :placeholder="$t('form.whatsYourNameHint')" required />
-            <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!nameForm.errorMessage">{{ nameForm.errorMessage }}</b-form-invalid-feedback>
-          </b-form-group>
+    <b-form @submit.prevent="guestSignInAndEnterRoom" class="text-center">
+      <b-form-group id="form-group-name" class="text-center" :label="$t('form.whatsYourName')" label-for="form-input-name">
+        <b-form-input id="form-input-name" v-model="nameForm.name" class="text-center" :placeholder="$t('form.whatsYourNameHint')" required />
+        <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!nameForm.errorMessage">{{ nameForm.errorMessage }}</b-form-invalid-feedback>
+      </b-form-group>
 
-          <b-button class="shadow" size="lg" variant="outline-danger" @click="goBack()">
-            {{ $t('general.back') }}
-          </b-button>
+      <b-container>
+        <b-row no-gutters align-h="center">
+          <b-col cols="auto"><b-button class="shadow" size="lg" variant="outline-danger" @click="goBack()">{{ $t('general.back') }}</b-button></b-col>
 
-          <b-button v-if="nameForm.isLoading" class="shadow" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
-          <b-button v-else class="shadow" size="lg" variant="success" type="submit" :disabled="isNameFieldInvalid">{{ $t('general.confirmName') }}</b-button>
-        </b-form>
-      </div>
-    </div>
+          <b-col cols="auto">
+            <b-button v-if="nameForm.isLoading" class="shadow" size="lg" variant="primary" type="submit" disabled><b-spinner small /></b-button>
+            <b-button v-else class="shadow" size="lg" variant="success" type="submit" :disabled="isNameFieldInvalid">{{ $t('general.confirmName') }}</b-button>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-form>
+
   </div>
   <!-- END SCREEN 2: NAME========================================================================================-->
 
