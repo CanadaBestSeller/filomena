@@ -1,5 +1,5 @@
 <template>
-  <div class="room-link-div text-center bg-transparent">
+  <div class="room-link-div text-center">
     <b-link ref="roomLink" @click="copyLinkToClipboard()" class="room-link">
       {{ roomLink }}
     </b-link>
@@ -44,10 +44,6 @@ export default {
 </script>
 
 <style>
-.room-link-div {
-  margin: 0;
-}
-
 .room-link {
   font-family: "Cera Round Pro Bold", sans-serif;
   font-size: 1.5rem;

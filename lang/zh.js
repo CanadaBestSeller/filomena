@@ -23,6 +23,7 @@ export default {
     letsStartTheParty: '🎊狂欢吧🎊',
     startGame: '开始! 🎉',
     welcomeToRoom: '✨欢迎到{0}✨',
+    players: '玩家',
   },
   form: {
     whatsYourName: '你叫什么名字?',
