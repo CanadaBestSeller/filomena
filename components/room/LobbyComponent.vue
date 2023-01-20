@@ -16,14 +16,7 @@
 <!--      </b-input-group-append>-->
 <!--    </b-input-group>-->
 
-    <h2 class="text-center mt-5">{{ $t('lobby.players') }}</h2>
-
-    <b-card class="mb-3 overflow-auto" style="height: 20rem">
-      <p v-for="player in f.roomDoc.players" :key="player.uid">
-        <b>{{ player.name }}</b>
-      </p>
-    </b-card>
-
+    <RoomPlayerComponent :f="f"/>
 
     <div class="d-flex justify-content-center">
     <!-- TODO remove this after styling looks good -->
