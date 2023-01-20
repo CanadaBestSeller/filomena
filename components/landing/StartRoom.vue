@@ -12,7 +12,7 @@
 
     <b-form @submit.prevent="guestSignInAndCreateRoom">
       <b-form-group class="my-3 text-center" id="form-group-name" :label="$t('form.whatsYourName')" label-for="form-input-name">
-        <b-form-input id="form-input-name" v-model="form.name" class="text-center" :placeholder="$t('form.whatsYourNameHint')" required />
+        <b-form-input id="form-input-name" maxLength="16" v-model="form.name" class="text-center" :placeholder="$t('form.whatsYourNameHint')" required />
         <b-form-invalid-feedback id="submit-feedback" v-bind:force-show="!!form.errorMessage">{{ form.errorMessage }}</b-form-invalid-feedback>
       </b-form-group>
 
