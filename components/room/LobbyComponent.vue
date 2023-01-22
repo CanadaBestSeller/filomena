@@ -16,7 +16,9 @@
 <!--      </b-input-group-append>-->
 <!--    </b-input-group>-->
 
-    <RoomPlayerComponent :f="f"/>
+      <h2 class="text-center mt-5">{{ $t('lobby.players') }}</h2>
+
+      <RoomPlayerComponent :f="f"/>
 
     <div class="d-flex justify-content-center">
     <!-- TODO remove this after styling looks good -->
@@ -24,7 +26,7 @@
 <!--    <b-button v-cloak v-if="f.roomDoc.players.length < 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" disabled variant="success">oooWe need at least 3 players to start game</b-button>-->
 <!--    <b-button v-cloak v-else-if="f.roomDoc.players.length >= 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>-->
 <!--    <p v-cloak v-else-if="f.roomDoc.players.length < 3">oooWe need at least 3 players to start game</p>-->
-<!--    <p v-cloak v-else>oooWaiting for host to start game...</p>-->
+<!--    <p v-cloak v-else>oooWaiting for {{ f.roomDoc.players.find(p => p.uid === f.roomDoc.hostUid).name }} to start game...</p>-->
     </div>
 
   </div>
