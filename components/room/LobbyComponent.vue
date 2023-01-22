@@ -2,6 +2,7 @@
   <div>
     <RoomLinkComponent :roomId="roomId"/>
 
+
 <!--    <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>-->
 <!--    <b-card class="mb-3 overflow-auto" style="height: 20rem">-->
 <!--      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">-->
@@ -16,11 +17,11 @@
 <!--      </b-input-group-append>-->
 <!--    </b-input-group>-->
 
-      <h2 class="text-center mt-5">{{ $t('lobby.players') }}</h2>
+      <h2 class="text-center">{{ $t('lobby.players') }}</h2>
 
       <RoomPlayerComponent :f="f"/>
 
-    <div class="d-flex justify-content-center">
+    <div class="my-1 d-flex justify-content-center">
     <!-- TODO remove this after styling looks good -->
     <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
 <!--    <b-button v-cloak v-if="f.roomDoc.players.length < 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" disabled variant="success">oooWe need at least 3 players to start game</b-button>-->
