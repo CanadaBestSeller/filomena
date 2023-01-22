@@ -24,6 +24,7 @@ export default {
     startGame: 'Commençons le jeu! 🎉',
     welcomeToRoom: '✨Bienvenue à {0}✨',
     players: 'Joueurs',
+    you: '{0} (Toi)',
   },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',
