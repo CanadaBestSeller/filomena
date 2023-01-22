@@ -37,6 +37,16 @@ export default {
     bootstrapVueCSS: false
   },
 
+  // Workaround needed for dev mode to work w/ Firestore's experimentalLongPolling
+  // Why do we need experimentalLongPolling? Issues w/ Windows, antiviruses, etc. See : https://stackoverflow.com/a/72564439/17503172
+  // Why do we need runInNewContext? See https://github.com/nuxt-community/firebase-module/issues/116
+  // Also see: https://github.com/nuxt/nuxt/issues/7266#issuecomment-638382133
+  render: {
+    bundleRenderer: {
+      runInNewContext: false
+    }
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],

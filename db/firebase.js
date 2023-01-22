@@ -20,4 +20,7 @@ if (!firebase.apps.length) {
 }
 
 export const db = firebase.firestore()
+// Workaround for Firebase issues in Windows: https://stackoverflow.com/a/72564439/17503172
+db.settings({ experimentalForceLongPolling: true })
+
 export const auth = firebase.auth()

@@ -1,5 +1,5 @@
 <template>
-  <div class="room-link-div text-center">
+  <div class="my-3 d-flex flex-column justify-content-center room-link-div text-center">
     <b-link ref="roomLink" @click="copyLinkToClipboard()" class="room-link">
       {{ roomLink }}
     </b-link>
@@ -44,6 +44,13 @@ export default {
 </script>
 
 <style>
+.room-link-div {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 1;
+}
+
 .room-link {
   font-family: "Cera Round Pro Bold", sans-serif;
   font-size: 1.5rem;
