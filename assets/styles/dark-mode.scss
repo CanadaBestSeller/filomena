@@ -48,7 +48,14 @@
   }
 
   .lobby-avatar-emoji {
-    margin-bottom: -1rem;
+    margin-bottom: -.25rem;
+  }
+
+  .lobby-avatar-name {
+    overflow-wrap: break-word;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 
   @import './assets/styles/app.scss';

@@ -20,9 +20,11 @@ export default {
     step3: 'Step 3: Repeat, tally up the points, and play again!',
   },
   lobby: {
+    roomDoesNotExist: '😬 Room {0} does not exist!',
     letsStartTheParty: 'Let\'s start the party 🎉',
     startGame: 'Start Game! 🎉',
     welcomeToRoom: '✨Welcome to {0}✨',
+    inviteFriends: 'Invite friends to join this room!',
     players: 'Players',
     you: '{0} (You)',
   },
@@ -40,6 +42,8 @@ export default {
     copied: 'Copied!',
     chatroom: 'Chat',
     sendMessage: 'Send ✈️',
+    secondsLeft: '⏱️ {0}s {1}',
+    answer: 'Answer 📝',
   },
   questions: {
     static: {

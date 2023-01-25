@@ -21,8 +21,10 @@ export default {
   },
   lobby: {
     letsStartTheParty: '🎊狂欢吧🎊',
+    roomDoesNotExist: '😬 {0}室不存在!',
     startGame: '开始! 🎉',
     welcomeToRoom: '✨欢迎到{0}✨',
+    inviteFriends: '邀请朋友加入房间!',
     players: '玩家',
     you: '{0} (你)',
   },
@@ -40,6 +42,8 @@ export default {
     copied: '拷贝了!',
     chatroom: '聊天室',
     sendMessage: '发 ✈️',
+    secondsLeft: '⏱️{0}秒{1}',
+    answer: '回答 📝',
   },
   questions: {
     fun_001_afterLongDayAtWork: '经过漫长的一天工作，{0}如何放松？'
