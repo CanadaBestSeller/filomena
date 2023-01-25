@@ -54,10 +54,6 @@ export default {
   margin-bottom: -.25rem;
 }
 
-.lobby-avatar-emoji .dark-mode {
-  margin-bottom: -.5rem;
-}
-
 .lobby-avatar-name {
   overflow-wrap: break-word;
   margin-bottom: 1rem;

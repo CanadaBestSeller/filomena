@@ -1,6 +1,10 @@
 <template>
   <div>
 
+    <b-alert v-if="$route.params.invalidRoomId" variant="danger" dismissible fade :show="5" style="z-index: 100" class="text-center position-fixed fixed-top m-0 rounded-0" >
+      {{ $t('lobby.roomDoesNotExist', [$route.params.invalidRoomId]) }}
+    </b-alert>
+
     <b-container class="mt-5">
       <b-row><b-col><h1 class="text-center">{{ $t('landing.title') }}</h1></b-col></b-row>
       <b-row><b-col><h5 class="text-center">{{ $t('landing.subtitle') }}</h5></b-col></b-row>
@@ -19,17 +23,6 @@
 
 <script>
 export default {
-  created() {
-    if (this.$route.params.invalidRoomId) {
-      this.$bvToast.toast(`oooRoom ${this.$route.params.invalidRoomId} does not exist!`, {
-        title: '😬',
-        variant: 'danger',
-        toaster: 'b-toaster-top-center',
-        autoHideDelay: 5000,
-      })
-    }
-  },
-
   methods: {
     joinParty () {
       this.$router.push('/enter')

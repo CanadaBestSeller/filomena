@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="game-div">
     <RoomLinkComponent :roomId="roomId"/>
 
 
@@ -11,27 +11,22 @@
 
 
     <!-- ANSWER SCREEN, entering answer-->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
-      <h1>
-        {{ currentQuestion }}
-      </h1>
+    <div id="answering-div" v-cloak class="container-sm text-center" v-else-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
+      <h2>{{ currentQuestion }}</h2>
 
-      <h2><b-badge :variant="answerTimerVariant">{{ answerTimerCount }}</b-badge></h2>
+      <b-badge :variant="answerTimerVariant"><h5 class="m-1">{{ $t('general.secondsLeft', [answerTimerCount, answerTimerEmoji]) }}</h5></b-badge>
 
-      <b-input-group>
-        <b-form-input v-model="answerUi.newAnswerText" @keyup.enter="answerQuestionLocally"/>
-        <b-input-group-append>
-          <b-button variant="primary" type="text" @click="answerQuestionLocally">{{ $t('general.sendMessage') }}</b-button>
-        </b-input-group-append>
-      </b-input-group>
+      <b-form @submit.prevent="answerQuestionLocally">
+        <b-form-input class="my-3 text-center" id="form-input-answer" maxLength="320" v-model="answerUi.newAnswerText" @keyup.enter="answerQuestionLocally"/>
+        <b-button class="shadow mx-1" type="submit" size="lg" variant="primary" @click="answerQuestionLocally" :disabled="!answerUi.newAnswerText">{{ $t('general.answer') }}</b-button>
+      </b-form>
     </div>
 
 
     <!-- ANSWER SCREEN, entered answer-->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered">
-      <h1>
-        oooWaiting for others to answer...
-      </h1>
+      <h1>oooWaiting for others to answer...</h1>
+      <b-badge :variant="answerTimerVariant"><h5 class="m-1">{{ $t('general.secondsLeft', [answerTimerCount, answerTimerEmoji]) }}</h5></b-badge>
     </div>
 
 
@@ -155,10 +150,6 @@ export default {
       return this.$t(currentQuestion.id, [currentQuestion.subject1, currentQuestion.subject2])
     },
 
-    answerTimerVariant() { return this.answerTimerCount <= 5 ? 'danger' : this.answerTimerCount <= 15 ? 'warning' : 'success' },
-    answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
-    answered() { return this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.f.user.uid)},
-
     currentWinningAnswers() {
       const answers = this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers
       const winningAnswers = []
@@ -174,6 +165,10 @@ export default {
       }
       return winningAnswers
     },
+
+    answerTimerVariant() { return this.answerTimerCount <= 5 ? 'danger' : this.answerTimerCount <= 15 ? 'warning' : 'light' },
+    answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
+    answered() { return this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.f.user.uid)},
 
     voteTimerVariant() { return this.voteTimerCount <= 5 ? 'info' : this.voteTimerCount <= 15 ? 'info' : 'info' },
     voteTimerEmoji() { return this.voteTimerCount <= 5 ? '😱' : this.voteTimerCount <= 15 ? '😬' : '🤔' },
@@ -278,5 +273,8 @@ export default {
 </script>
 
 <style>
-button[type="text"] { margin: 0; border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem; }
+#form-input-answer {
+  height: 3rem;
+  font-size: 1.5rem;
+}
 </style>

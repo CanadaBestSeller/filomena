@@ -20,9 +20,11 @@ export default {
     step3: '3e étape: Répéter, compter les points et rejouer!',
   },
   lobby: {
+    roomDoesNotExist: '😬 Salle {0} n\'existe pas!',
     letsStartTheParty: 'Commençons la fête 🎉',
     startGame: 'Commençons le jeu! 🎉',
     welcomeToRoom: '✨Bienvenue à {0}✨',
+    inviteFriends: 'Invite tes amis à rejoindre!',
     players: 'Joueurs',
     you: '{0} (Toi)',
   },
@@ -40,6 +42,8 @@ export default {
     copied: 'Copié!',
     chatroom: 'Salon',
     sendMessage: 'Envoyer ✈️',
+    secondsLeft: '⏱️ {0}s {1}',
+    answer: 'Répondre 📝',
   },
   questions: {
     fun_001_afterLongDayAtWork: 'Après une longue journée de travail, que va faire {0}?'

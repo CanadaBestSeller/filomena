@@ -1,5 +1,6 @@
 <template>
   <div class="my-3 d-flex flex-column justify-content-center room-link-div text-center">
+    <h5 class="my-1"><b>{{ $t('lobby.inviteFriends') }}</b></h5>
     <b-link ref="roomLink" @click="copyLinkToClipboard()" class="room-link">
       {{ roomLink }}
     </b-link>
@@ -49,6 +50,8 @@ export default {
   width: 100vw;
   top: 0;
   z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .room-link {
