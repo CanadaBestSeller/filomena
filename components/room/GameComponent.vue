@@ -16,7 +16,7 @@
       <b-badge pill :variant="answerTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [answerTimerCount]) }}</h6></b-badge>
 
       <b-form @submit.prevent="answerQuestionLocally">
-        <b-form-input class="my-3 text-center" id="form-input-answer" maxLength="320" v-model="answerUi.newAnswerText" @keyup.enter="answerQuestionLocally"/>
+        <b-form-input class="my-3 text-center" id="form-input-answer" placeholder="📝" maxLength="320" v-model="answerUi.newAnswerText" @keyup.enter="answerQuestionLocally"/>
         <b-button class="shadow mx-1" type="submit" size="lg" variant="primary" @click="answerQuestionLocally" :disabled="!answerUi.newAnswerText">{{ $t('game.answer', [answerTimerEmoji]) }}</b-button>
       </b-form>
     </div>
@@ -60,6 +60,7 @@
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0" class="container-sm text-center">
       <h3>{{ currentQuestion }}</h3>
       <h1>oooThere were no votes!</h1>
+      <RoomPlayerStatusPopover :f="f" class="my-2"/>
       <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
     </div>
 
@@ -70,14 +71,17 @@
       <div class="container-sm text-center">
         <h3>{{ currentQuestion }}</h3>
         <h5>{{ $t('game.winningAnswerIs') }}</h5>
-        <h2 class="my-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
-        <h3 class="my-0">- {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})</h3>
 
+        <h2 class="mt-5 mb-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
+        <h4 class="mt-0 mb-5">
+          - {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})
+        </h4>
+
+        <RoomPlayerStatusPopover :f="f" class="my-2"/>
         <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
 
       </div>
 
-      <PlayerStatusGrid :f="f" class="my-3"/>
     </div>
 
 
@@ -92,6 +96,7 @@
         </b-list-group-item>
       </b-list-group>
 
+      <RoomPlayerStatusPopover :f="f" class="my-2"/>
       <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
     </div>
 
@@ -108,7 +113,7 @@ import {
   getCurrentTimeEpochSec,
   transitionAfterVote,
   transitionAfterAnswer,
-  voteForAnswer, transitionAfterSummary
+  voteForAnswer, transitionAfterSummary, getCurrentWinningAnswers
 } from '@/lib/firebase_gateway'
 import PlayerStatus from '~/components/room/PlayerStatusGrid'
 
@@ -151,21 +156,7 @@ export default {
       return this.$t(currentQuestion.id, [currentQuestion.subject1, currentQuestion.subject2])
     },
 
-    currentWinningAnswers() {
-      const answers = this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers
-      const winningAnswers = []
-
-      let highestVoteCount = 0  // First: iterate through answers and find highestVoteCount
-      for (let i = 0; i < answers.length; i++) {
-        if (answers[i].votes > highestVoteCount) { highestVoteCount = answers[i].votes }
-      }
-
-      // Second: get all answers with the highestVoteCount
-      for (let i = 0; i < answers.length; i++) {
-        if (answers[i].votes === highestVoteCount) { winningAnswers.push(answers[i]) }
-      }
-      return winningAnswers
-    },
+    currentWinningAnswers() { return getCurrentWinningAnswers(this.f.roomDoc) },
 
     answerTimerVariant() { return this.answerTimerCount <= 5 ? 'danger' : this.answerTimerCount <= 15 ? 'warning' : 'light' },
     answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
@@ -236,7 +227,7 @@ export default {
         }
 
         if (oldStatus === 'VOTE' && newStatus === 'SUMMARY') {
-          await transitionAfterVote(this.f.roomDocRef)
+          await transitionAfterVote(this.f.roomDocRef, this.f.roomDoc)
           this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
           this.voted = false
           this.voteTimerCount = -1
@@ -253,7 +244,7 @@ export default {
         }
 
         if (this.f.roomDoc.gameStatus === 'VOTE' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) {
-          await transitionAfterVote(this.f.roomDocRef)
+          await transitionAfterVote(this.f.roomDocRef, this.f.roomDoc)
           this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
           this.voted = false
           this.voteTimerCount = -1

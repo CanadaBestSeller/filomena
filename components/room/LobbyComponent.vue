@@ -5,8 +5,8 @@
 
 <!--    <h4 class="mx-3 mt-3 mb-2">{{ $t('general.chatroom') }}</h4>-->
 <!--    <b-card class="mb-3 overflow-auto" style="height: 20rem">-->
-<!--      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)">-->
-<!--        <b>{{ message.senderName }}: </b>{{ message.text }}-->
+<!--      <p v-for="message in f.roomDoc.chatMessages" :key="message.id" :class="getMessageClass(message.senderUid)" style="font-family: 'Cera Round Pro Bold', sans-serif">-->
+<!--        {{ message.senderName }}: {{ message.text }}-->
 <!--      </p>-->
 <!--    </b-card>-->
 

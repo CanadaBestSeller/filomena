@@ -35,6 +35,7 @@ export default {
     waitingVote: 'Waiting for others to vote...',
     winningAnswerIs: 'The winning answer is...',
     votes: '{0} votes',
+    scoreboard: 'Scoreboard 📊',
   },
   form: {
     whatsYourName: 'What\'s your name?',
