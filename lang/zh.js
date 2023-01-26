@@ -28,6 +28,14 @@ export default {
     players: '玩家',
     you: '{0} (你)',
   },
+  game: {
+    answer: '回答 {0}',
+    waitingAnswer: '等待其他人的回答...',
+    vote: '投票 📝',
+    waitingVote: '等待其他人的投票...',
+    winningAnswerIs: '最好的答案是...',
+    votes: '{0}票',
+  },
   form: {
     whatsYourName: '你叫什么名字?',
     whatsYourNameHint: '例如，“大卫”',
@@ -42,8 +50,7 @@ export default {
     copied: '拷贝了!',
     chatroom: '聊天室',
     sendMessage: '发 ✈️',
-    secondsLeft: '⏱️{0}秒{1}',
-    answer: '回答 📝',
+    secondsLeft: '⏱️{0}秒',
   },
   questions: {
     fun_001_afterLongDayAtWork: '经过漫长的一天工作，{0}如何放松？'

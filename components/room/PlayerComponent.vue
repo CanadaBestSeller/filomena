@@ -5,12 +5,12 @@
         <b-col v-for="player in f.roomDoc.players" :key="player.uid">
 
           <div class="d-flex my-2 flex-column justify-content-center align-content-center">
-            <h1 v-cloak v-if="player.uid !== f.user.uid" class="text-center lobby-avatar-emoji">{{ player.emoji }}</h1>
-            <h1 v-cloak v-else-if="isEmojiThrottling" class="text-center lobby-avatar-emoji">✨️</h1>
-            <h1 v-cloak v-else class="text-center lobby-avatar-emoji" @click="changePlayerEmoji"><b-link>{{ player.emoji }}</b-link></h1>
+            <h1 v-cloak v-if="player.uid !== f.user.uid" class="text-center avatar-emoji">{{ player.emoji }}</h1>
+            <h1 v-cloak v-else-if="isEmojiThrottling" class="text-center avatar-emoji">✨️</h1>
+            <h1 v-cloak v-else class="text-center avatar-emoji" @click="changePlayerEmoji"><b-link>{{ player.emoji }}</b-link></h1>
 
-            <h5 v-cloak v-if="player.uid === f.user.uid" class="text-primary text-center lobby-avatar-name">{{ $t('lobby.you', [player.name]) }}</h5>
-            <h5 v-cloak v-else class="text-center lobby-avatar-name">{{ player.name }}</h5>
+            <h5 v-cloak v-if="player.uid === f.user.uid" class="text-primary text-center avatar-name">{{ $t('lobby.you', [player.name]) }}</h5>
+            <h5 v-cloak v-else class="text-center avatar-name">{{ player.name }}</h5>
           </div>
 
         </b-col>
@@ -50,11 +50,11 @@ export default {
   max-height: 60vh;
 }
 
-.lobby-avatar-emoji {
+.avatar-emoji {
   margin-bottom: -.25rem;
 }
 
-.lobby-avatar-name {
+.avatar-name {
   overflow-wrap: break-word;
   margin-bottom: 1rem;
   margin-left: 1rem;

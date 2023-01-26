@@ -28,6 +28,14 @@ export default {
     players: 'Players',
     you: '{0} (You)',
   },
+  game: {
+    answer: 'Answer {0}',
+    waitingAnswer: 'Waiting for others to answer...',
+    vote: 'Vote 📝',
+    waitingVote: 'Waiting for others to vote...',
+    winningAnswerIs: 'The winning answer is...',
+    votes: '{0} votes',
+  },
   form: {
     whatsYourName: 'What\'s your name?',
     whatsYourNameHint: 'E.g.) "David"',
@@ -42,8 +50,7 @@ export default {
     copied: 'Copied!',
     chatroom: 'Chat',
     sendMessage: 'Send ✈️',
-    secondsLeft: '⏱️ {0}s {1}',
-    answer: 'Answer 📝',
+    secondsLeft: '⏱️ {0}s',
   },
   questions: {
     static: {

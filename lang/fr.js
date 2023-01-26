@@ -28,6 +28,14 @@ export default {
     players: 'Joueurs',
     you: '{0} (Toi)',
   },
+  game: {
+    answer: 'Répondre {0}',
+    waitingAnswer: 'En attendant la réponse de tout le monde...',
+    vote: 'Voter 📝',
+    waitingVote: 'En attendant le vote de tout le monde...',
+    winningAnswerIs: 'La réponse gagnante c\'est...',
+    votes: '{0} voix',
+  },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',
     whatsYourNameHint: 'Par exemple, "David"',
@@ -42,8 +50,7 @@ export default {
     copied: 'Copié!',
     chatroom: 'Salon',
     sendMessage: 'Envoyer ✈️',
-    secondsLeft: '⏱️ {0}s {1}',
-    answer: 'Répondre 📝',
+    secondsLeft: '⏱️ {0}s',
   },
   questions: {
     fun_001_afterLongDayAtWork: 'Après une longue journée de travail, que va faire {0}?'
