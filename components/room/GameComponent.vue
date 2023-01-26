@@ -6,7 +6,6 @@
     <!-- FINISHED SCREEN -->
     <div v-cloak v-if="f.roomDoc.gameStatus === 'FINISHED'">
       <h1>oooWe're done! 🎊</h1>
-      <h5>oooThe Winning Answer Is....</h5>
     </div>
 
 
@@ -14,31 +13,29 @@
     <div id="answering-div" v-cloak class="container-sm text-center" v-else-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
       <h2>{{ currentQuestion }}</h2>
 
-      <b-badge :variant="answerTimerVariant"><h5 class="m-1">{{ $t('general.secondsLeft', [answerTimerCount, answerTimerEmoji]) }}</h5></b-badge>
+      <b-badge pill :variant="answerTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [answerTimerCount]) }}</h6></b-badge>
 
       <b-form @submit.prevent="answerQuestionLocally">
         <b-form-input class="my-3 text-center" id="form-input-answer" maxLength="320" v-model="answerUi.newAnswerText" @keyup.enter="answerQuestionLocally"/>
-        <b-button class="shadow mx-1" type="submit" size="lg" variant="primary" @click="answerQuestionLocally" :disabled="!answerUi.newAnswerText">{{ $t('general.answer') }}</b-button>
+        <b-button class="shadow mx-1" type="submit" size="lg" variant="primary" @click="answerQuestionLocally" :disabled="!answerUi.newAnswerText">{{ $t('game.answer', [answerTimerEmoji]) }}</b-button>
       </b-form>
     </div>
 
 
     <!-- ANSWER SCREEN, entered answer-->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered">
-      <h1>oooWaiting for others to answer...</h1>
-      <b-badge :variant="answerTimerVariant"><h5 class="m-1">{{ $t('general.secondsLeft', [answerTimerCount, answerTimerEmoji]) }}</h5></b-badge>
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered" class="container-sm text-center">
+      <h3>{{ $t('game.waitingAnswer') }}</h3>
+      <b-badge pill :variant="answerTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [answerTimerCount]) }}</h6></b-badge>
     </div>
 
 
     <!-- VOTE SCREEN, not voted -->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && !voted">
-      <h1>
-        {{ currentQuestion }}
-      </h1>
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && !voted" class="container-sm text-center">
+      <h2>{{ currentQuestion }}</h2>
 
-      <h2><b-badge :variant="voteTimerVariant">{{ voteTimerCount }}</b-badge></h2>
+      <b-badge pill :variant="voteTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [voteTimerCount]) }}</h6></b-badge>
 
-      <div>
+      <div class="my-3">
         <b-form-group v-slot="{ ariaDescribedby }">
           <b-form-radio v-for="answer in f.roomDoc.questions[f.roomDoc.currentQuestionIndex].answers" :key="answer.uid"
                         v-model="voteRadioOption" :aria-describedby="ariaDescribedby" name="vote-group"
@@ -46,43 +43,46 @@
                         {{ answer.text }}
           </b-form-radio>
         </b-form-group>
-
-        <div>Selected: <strong>{{ voteRadioOption }}</strong></div>
       </div>
 
-      <b-button variant="primary" :disabled="!voteRadioOption" @click="voteLocally">oooVote</b-button>
+      <b-button class="shadow mx-1" size="lg" variant="primary" @click="voteLocally" :disabled="!voteRadioOption">{{ $t('game.vote') }}</b-button>
     </div>
 
 
     <!-- VOTE SCREEN, voted -->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && voted">
-      <h1>
-        oooWaiting for others to vote...
-      </h1>
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && voted" class="container-sm text-center">
+      <h3>{{ $t('game.waitingVote') }}</h3>
+      <b-badge pill :variant="voteTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [voteTimerCount]) }}</h6></b-badge>
     </div>
 
 
     <!-- SUMMARY SCREEN, no vote at all -->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0">
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0" class="container-sm text-center">
       <h3>{{ currentQuestion }}</h3>
       <h1>oooThere were no votes!</h1>
-      <h2><b-badge :variant="summaryTimerVariant">{{ summaryTimerCount }}</b-badge></h2>
+      <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
     </div>
 
 
     <!-- SUMMARY SCREEN, one winning vote -->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 1">
-      <h3>{{ currentQuestion }}</h3>
-      <h5>oooThe Winning Answer Is....</h5>
-      <h1>{{ currentWinningAnswers[0].text }}</h1>
-      <h4>{{ currentWinningAnswers[0].votes }} oooVotes</h4>
-      <h3>{{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }}</h3>
-      <h2><b-badge :variant="summaryTimerVariant">{{ summaryTimerCount }}</b-badge></h2>
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 1" style="overflow-y: auto; max-height: 60vh;">
+
+      <div class="container-sm text-center">
+        <h3>{{ currentQuestion }}</h3>
+        <h5>{{ $t('game.winningAnswerIs') }}</h5>
+        <h2 class="my-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
+        <h3 class="my-0">- {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})</h3>
+
+        <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
+
+      </div>
+
+      <PlayerStatusGrid :f="f" class="my-3"/>
     </div>
 
 
     <!-- SUMMARY SCREEN, many winning votes -->
-    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length > 1">
+    <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length > 1" class="container-sm text-center">
       <h3>{{ currentQuestion }}</h3>
       <h5>oooIt's a tie!</h5>
 
@@ -92,7 +92,7 @@
         </b-list-group-item>
       </b-list-group>
 
-      <h2><b-badge :variant="summaryTimerVariant">{{ summaryTimerCount }}</b-badge></h2>
+      <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
     </div>
 
 
@@ -110,13 +110,14 @@ import {
   transitionAfterAnswer,
   voteForAnswer, transitionAfterSummary
 } from '@/lib/firebase_gateway'
+import PlayerStatus from '~/components/room/PlayerStatusGrid'
 
 export default {
-
+  components: { PlayerStatus },
   created() {
     setInterval(() => { this.totalPlayTime++ }, 1000);
 
-    if (!this.answered) {
+    if (this.f.roomDoc.gameStatus === 'ANSWER') {
       this.answerTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) - getCurrentTimeEpochSec()
     }
 
@@ -125,7 +126,7 @@ export default {
     }
 
     if (this.f.roomDoc.gameStatus === 'SUMMARY') {
-      this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
+      this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
     }
   },
 
@@ -170,10 +171,10 @@ export default {
     answerTimerEmoji() { return this.answerTimerCount <= 5 ? '😱' : this.answerTimerCount <= 15 ? '😬' : '🤔' },
     answered() { return this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex].answers.some(a => a.uid === this.f.user.uid)},
 
-    voteTimerVariant() { return this.voteTimerCount <= 5 ? 'info' : this.voteTimerCount <= 15 ? 'info' : 'info' },
+    voteTimerVariant() { return this.voteTimerCount <= 5 ? 'danger' : this.voteTimerCount <= 15 ? 'warning' : 'light' },
     voteTimerEmoji() { return this.voteTimerCount <= 5 ? '😱' : this.voteTimerCount <= 15 ? '😬' : '🤔' },
 
-    summaryTimerVariant() { return this.answerTimerCount <= 5 ? 'secondary' : this.answerTimerCount <= 15 ? 'secondary' : 'secondary' },
+    summaryTimerVariant() { return this.answerTimerCount <= 5 ? 'light' : this.answerTimerCount <= 15 ? 'light' : 'light' },
   },
 
   props: [

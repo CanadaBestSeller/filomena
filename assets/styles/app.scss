@@ -40,6 +40,7 @@ h2 { @include font-size(3rem) }
 h3 { @include font-size(2rem) }
 h4 { font-size: 1.5rem; }
 h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
 label { font-size: 1.5rem; }
 
 [v-cloak] { display: none; } /*Prevents flashing - component templates with v-cloak will be hidden until rendered*/
