@@ -35,6 +35,7 @@ export default {
     waitingVote: 'En attendant le vote de tout le monde...',
     winningAnswerIs: 'La réponse gagnante c\'est...',
     votes: '{0} voix',
+    scoreboard: 'Tableau de points 📊',
   },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',

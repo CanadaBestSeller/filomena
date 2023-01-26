@@ -1,11 +1,11 @@
 <template>
-  <div class="shadow-sm bg-light py-1 d-flex flex-column justify-content-center room-link-div text-center">
+  <div class="shadow-sm bg-light pt-2 pb-1 d-flex flex-column justify-content-center room-link-div text-center">
     <p class="my-0"><b>{{ $t('lobby.inviteFriends') }}</b></p>
     <b-link ref="roomLink" @click="copyLinkToClipboard()" class="room-link">
       {{ roomLink }}
     </b-link>
-    <p v-if="copied" class="my-1"><b>{{ $t('general.copied') }}</b></p>
-    <p v-else @click="copyLinkToClipboard()" class="my-0">{{ $t('general.clickToCopyToClipboard') }}</p>
+    <p class="my-0" v-if="copied"><b>{{ $t('general.copied') }}</b></p>
+    <p class="my-0" v-else @click="copyLinkToClipboard()">{{ $t('general.clickToCopyToClipboard') }}</p>
   </div>
 </template>
 

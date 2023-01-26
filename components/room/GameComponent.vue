@@ -70,14 +70,17 @@
       <div class="container-sm text-center">
         <h3>{{ currentQuestion }}</h3>
         <h5>{{ $t('game.winningAnswerIs') }}</h5>
-        <h2 class="my-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
-        <h3 class="my-0">- {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})</h3>
 
+        <h2 class="mt-5 mb-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
+        <h4 class="mt-0 mb-5">
+          - {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})
+        </h4>
+
+        <RoomPlayerStatusPopover :f="f" class="my-2"/>
         <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
 
       </div>
 
-      <PlayerStatusGrid :f="f" class="my-3"/>
     </div>
 
 

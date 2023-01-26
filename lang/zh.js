@@ -35,6 +35,7 @@ export default {
     waitingVote: '等待其他人的投票...',
     winningAnswerIs: '最好的答案是...',
     votes: '{0}票',
+    scoreboard: '记分牌📊',
   },
   form: {
     whatsYourName: '你叫什么名字?',
