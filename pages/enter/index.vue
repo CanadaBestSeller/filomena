@@ -4,6 +4,11 @@
 
 <script>
 export default {
-  name: 'EnterPage'
+  name: 'EnterPage',
+  head() {
+    return {
+      title: 'Join Room 👋'
+    }
+  },
 }
 </script>

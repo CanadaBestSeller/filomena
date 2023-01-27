@@ -138,7 +138,6 @@ export default {
     },
 
     goBack () { this.$router.push('/') },
-    head () { return { title: this.roomId } },
   },
 
   watch: {

@@ -1,6 +1,6 @@
 export default {
   landing: {
-    title: 'Thumbs Up!',
+    title: 'Zoom Panda!',
     subtitle: 'Un jeu amusant gratuit 😄',
     welcomeBack: 'Bon retour, {0} 😎',
     madeBy: 'Fait par {0}',

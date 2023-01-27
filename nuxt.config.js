@@ -8,7 +8,7 @@ export default {
   head () {
     const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true })
     return {
-      title: 'Thumbs Up!',
+      title: 'Zoom Panda!',
       htmlAttrs: {
         ...i18nHead.htmlAttrs
       },
@@ -69,7 +69,7 @@ export default {
   ],
 
   i18n: {
-    baseUrl: 'https://thumbs.up.railway.app', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
+    baseUrl: 'https://panda.up.railway.app', // TODO Required for SEO: https://i18n.nuxtjs.org/seo
     strategy: 'no_prefix', // Our game heavily uses dynamic URLs, e.g.) domain.com/AX7F, we don't want i18n prefixes
     locales: [
       {

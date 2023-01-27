@@ -19,7 +19,7 @@ export default {
   },
 
   computed: {
-    roomLink () { return 'thumbs.up.railway.app/' + this.roomId },
+    roomLink () { return 'panda.up.railway.app/' + this.roomId },
   },
 
   methods: {
