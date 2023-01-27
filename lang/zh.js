@@ -36,6 +36,8 @@ export default {
     winningAnswerIs: '最好的答案是...',
     votes: '{0}票',
     scoreboard: '记分牌📊',
+    gameOver: '游戏结束!',
+    winnerIs: '赢家是{0} {1}',
   },
   form: {
     whatsYourName: '你叫什么名字?',

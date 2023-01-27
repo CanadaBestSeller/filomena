@@ -1,6 +1,11 @@
 <template>
 
   <div>
+
+    <div class="d-flex justify-content-center m-2">
+      <b-img class="enter-image" src="~/assets/images/panda-laptop.png"/>
+    </div>
+
     <h3 class="text-center">{{ $t('form.enterTheCode') }}</h3>
 
     <b-form @submit.prevent="guestSignInAndJoinRoom">
@@ -56,4 +61,7 @@ export default {
   height: 3.5rem;
   font-size: 2rem;
 }
+
+@media (max-width: 768px) { .enter-image { max-height: 6rem } }
+@media (min-width: 769px) { .enter-image { max-height: 9rem } }
 </style>

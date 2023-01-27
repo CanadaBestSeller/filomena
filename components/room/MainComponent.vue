@@ -29,7 +29,9 @@
   <!-- SCREEN 2: NAME. v-else-if (!user). Not logged in, Firebase has returned a null user. Unless they log in, they won't be included in the game -->
   <div v-cloak v-else-if="!f.user">
 
-    <h2 class="my-3 text-center">{{ $t('lobby.welcomeToRoom', [roomId]) }}</h2>
+    <div class="d-flex justify-content-center m-2"><b-img class="start-image mb-0" src="~/assets/images/panda-pop-up.png"/></div>
+
+    <h2 class="text-center">{{ $t('lobby.welcomeToRoom', [roomId]) }}</h2>
 
     <b-form @submit.prevent="guestSignInAndEnterRoom" class="text-center">
       <b-form-group id="form-group-name" class="text-center" :label="$t('form.whatsYourName')" label-for="form-input-name">
@@ -79,7 +81,7 @@
 
 <script>
 import { auth, db } from '@/db/firebase'
-import { addPlayer } from '@/lib/firebase_gateway'
+import { addPlayer, getOrderedPlayersWithTotalPoints } from '@/lib/firebase_gateway'
 export default {
 
   async created () {
@@ -154,4 +156,7 @@ export default {
 
 <style>
 #form-input-name { height: 2.5rem; font-size: 1.2rem; }
+
+@media (max-width: 768px) { .start-image { max-height: 6rem } }
+@media (min-width: 769px) { .start-image { max-height: 9rem } }
 </style>

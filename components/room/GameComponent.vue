@@ -4,8 +4,11 @@
 
 
     <!-- FINISHED SCREEN -->
-    <div v-cloak v-if="f.roomDoc.gameStatus === 'FINISHED'">
-      <h1>oooWe're done! 🎊</h1>
+    <div v-cloak v-if="f.roomDoc.gameStatus === 'FINISHED'" class="container-sm text-center">
+      <div class="d-flex justify-content-center m-2"><b-img class="wait-image m-0" src="~/assets/images/panda-flag.png"/></div>
+      <h3>{{ $t('game.gameOver') }}</h3>
+      <h2 class="my-2">{{ $t('game.winnerIs', [getWinningPlayerWithTotalPoints().name, getWinningPlayerWithTotalPoints().emoji]) }}</h2>
+      <RoomPlayerStatusPopover :f="f" class="mb-5"/>
     </div>
 
 
@@ -24,6 +27,7 @@
 
     <!-- ANSWER SCREEN, entered answer-->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'ANSWER' && answered" class="container-sm text-center">
+      <div class="d-flex justify-content-center m-2"><b-img class="wait-image m-0" src="~/assets/images/panda-sleeping-2.png"/></div>
       <h3>{{ $t('game.waitingAnswer') }}</h3>
       <b-badge pill :variant="answerTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [answerTimerCount]) }}</h6></b-badge>
     </div>
@@ -51,6 +55,7 @@
 
     <!-- VOTE SCREEN, voted -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && voted" class="container-sm text-center">
+      <div class="d-flex justify-content-center m-2"><b-img class="wait-image m-0" src="~/assets/images/panda-sleeping-1.png"/></div>
       <h3>{{ $t('game.waitingVote') }}</h3>
       <b-badge pill :variant="voteTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [voteTimerCount]) }}</h6></b-badge>
     </div>
@@ -113,7 +118,7 @@ import {
   getCurrentTimeEpochSec,
   transitionAfterVote,
   transitionAfterAnswer,
-  voteForAnswer, transitionAfterSummary, getCurrentWinningAnswers
+  voteForAnswer, transitionAfterSummary, getCurrentWinningAnswers, getOrderedPlayersWithTotalPoints
 } from '@/lib/firebase_gateway'
 import PlayerStatus from '~/components/room/PlayerStatusGrid'
 
@@ -188,7 +193,17 @@ export default {
     getCurrentQuestion() {
       const currentQuestionIndex = this.f.roomDoc.currentQuestionIndex
       return this.f.roomDoc.questions[currentQuestionIndex]
-    }
+    },
+
+    getWinningPlayerWithTotalPoints() {
+      let max = 0
+      let winningPlayer = null
+      this.f.roomDoc.players.forEach(p => {
+        const currentPoints = p.points.reduce((total, points) => total + points, 0)
+        if (currentPoints > max) { max = currentPoints; winningPlayer = p }
+      })
+      return winningPlayer
+    },
   },
 
   watch: {
@@ -269,4 +284,7 @@ export default {
   height: 3rem;
   font-size: 1.5rem;
 }
+
+@media (max-width: 768px) { .wait-image { max-height: 6rem } }
+@media (min-width: 769px) { .wait-image { max-height: 9rem } }
 </style>

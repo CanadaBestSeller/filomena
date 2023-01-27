@@ -36,6 +36,8 @@ export default {
     winningAnswerIs: 'The winning answer is...',
     votes: '{0} votes',
     scoreboard: 'Scoreboard 📊',
+    gameOver: 'Game over!',
+    winnerIs: 'The winner is {0} {1}',
   },
   form: {
     whatsYourName: 'What\'s your name?',

@@ -36,6 +36,8 @@ export default {
     winningAnswerIs: 'La réponse gagnante c\'est...',
     votes: '{0} voix',
     scoreboard: 'Tableau de points 📊',
+    gameOver: 'Jeu terminé!',
+    winnerIs: '{0} {1} est le gagnant 🎉',
   },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',

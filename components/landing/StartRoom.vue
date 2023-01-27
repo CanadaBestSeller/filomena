@@ -8,6 +8,8 @@
   <!-- START IF NOT USER ========================================================================================-->
   <div v-else-if="!user">
 
+    <div class="d-flex justify-content-center m-2"><b-img class="start-image mb-0" src="~/assets/images/panda-pop-up.png"/></div>
+
     <h2>{{ $t('lobby.letsStartTheParty') }}</h2>
 
     <b-form @submit.prevent="guestSignInAndCreateRoom">
@@ -110,7 +112,8 @@ export default {
   font-size: 1.2rem;
 }
 
-.btn {
-  margin: .2rem;
-}
+.btn { margin: .2rem; }
+
+@media (max-width: 768px) { .start-image { max-height: 6rem } }
+@media (min-width: 769px) { .start-image { max-height: 9rem } }
 </style>

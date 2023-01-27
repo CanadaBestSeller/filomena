@@ -18,12 +18,12 @@
 </template>
 
 <script>
+import { getOrderedPlayersWithTotalPoints } from '~/lib/firebase_gateway'
+
 export default {
   computed: {
-    orderedPlayersWithTotalPoints () {
-      const orderedPlayersWithPoints = this.f.roomDoc.players
-      orderedPlayersWithPoints.forEach(p => p.totalPoints = p.points.reduce((total, points) => total + points, 0))
-      return orderedPlayersWithPoints.sort((a, b) => b.totalPoints - a.totalPoints)
+    orderedPlayersWithTotalPoints() {
+      return getOrderedPlayersWithTotalPoints(this.f.roomDoc)
     },
   },
   props: [
