@@ -6,10 +6,10 @@
   $card-bg: rgb(78, 78, 78);
   $body-bg: rgb(41, 41, 41);
 
-  $primary: rgb(0, 183, 255);
+  $primary: rgb(0, 170, 255);
   $secondary: white;
   $danger: rgb(255, 60, 60);
-  $success: rgb(1, 210, 1);
+  $success: rgb(1, 190, 1);
 
   $theme-colors: (
     "primary": $primary,
@@ -23,6 +23,7 @@
 
   h1, h2, h3, h4, h5, h6, p, label {
     color: whitesmoke;
+    font-family: "Cera Round Pro Medium", sans-serif;
   }
 
   .list-group-item {
@@ -59,4 +60,8 @@
   }
 
   @import './assets/styles/app.scss';
+
+  body {
+    font-family: "Cera Round Pro Medium", sans-serif;
+  }
 }

@@ -114,6 +114,6 @@ export default {
 
 .btn { margin: .2rem; }
 
-@media (max-width: 768px) { .start-image { max-height: 6rem } }
-@media (min-width: 769px) { .start-image { max-height: 9rem } }
+@media (max-width: 399px) { .start-image { max-height: 6rem } }
+@media (min-width: 400px) { .start-image { max-height: 9rem } }
 </style>

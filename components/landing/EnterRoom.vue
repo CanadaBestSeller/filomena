@@ -62,6 +62,6 @@ export default {
   font-size: 2rem;
 }
 
-@media (max-width: 768px) { .enter-image { max-height: 6rem } }
-@media (min-width: 769px) { .enter-image { max-height: 9rem } }
+@media (max-width: 399px) { .enter-image { max-height: 6rem } }
+@media (min-width: 400px) { .enter-image { max-height: 9rem } }
 </style>

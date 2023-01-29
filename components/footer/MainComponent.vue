@@ -17,7 +17,7 @@
     <b-navbar-nav>
       <li id="dark-mode" class="nav-item align-self-center">
         <b-link class="text-decoration-none" @click="toggleDarkMode()">
-          {{ isDarkMode ? '🌞' : '🌚' }}
+          {{ $colorMode.preference === 'dark' ? '🌞' : '🌚' }}
         </b-link>
       </li>
     </b-navbar-nav>
@@ -26,20 +26,12 @@
 
 <script>
 export default {
-  data () {
-    return {
-      isDarkMode: false
-    }
-  },
-
   methods: {
     toggleDarkMode () {
-      if (this.isDarkMode) {
-        this.$root.$el.classList.remove('dark-mode')
-        this.isDarkMode = false
+      if (this.$colorMode.preference === 'dark') {
+        this.$colorMode.preference = 'light'
       } else {
-        this.$root.$el.classList.add('dark-mode')
-        this.isDarkMode = true
+        this.$colorMode.preference = 'dark'
       }
     }
   }

@@ -285,6 +285,6 @@ export default {
   font-size: 1.5rem;
 }
 
-@media (max-width: 768px) { .wait-image { max-height: 6rem } }
-@media (min-width: 769px) { .wait-image { max-height: 9rem } }
+@media (max-width: 399px) { .wait-image { max-height: 6rem } }
+@media (min-width: 400px) { .wait-image { max-height: 9rem } }
 </style>

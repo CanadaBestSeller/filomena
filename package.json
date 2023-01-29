@@ -24,6 +24,7 @@
     "vuefire": "^2.2.5"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "2.1",
     "sass": "^1.57.1",
     "sass-loader": "^10.4.1"
   }
