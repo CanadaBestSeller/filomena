@@ -22,11 +22,11 @@
   );
 
   h1, h2, h3, h4, h5, h6, p, label {
-    color: white;
+    color: whitesmoke;
   }
 
   .list-group-item {
-    color: white;
+    color: whitesmoke;
   }
 
   $link-color: cyan;
@@ -38,7 +38,7 @@
   $input-color: black;
   $input-placeholder-color: DarkGray;
 
-  $dark: white;
+  $dark: whitesmoke;
   $light: $body-bg;
 
   $modal-content-bg: $card-bg;

@@ -8,7 +8,7 @@
     <b-container class="mt-4">
       <b-row class="d-flex justify-content-center align-items-center">
         <b-col cols="auto" class="d-flex justify-content-center px-2">
-          <b-img class="title-image mb-0" src="~/assets/images/panda-smile-face-only-3.png"/>
+          <b-img class="title-image mt-3 mb-0" src="~/assets/images/panda-smile-face-only-3.png"/>
         </b-col>
         <b-col cols="auto">
           <b-row><b-col><h1 class="m-0 text-center">{{ $t('landing.title') }}</h1></b-col></b-row>
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style>
-@media (max-width: 389px) { .title-image { max-height: 3rem } }
+@media (max-width: 389px) { .title-image { max-height: 4rem } }
 @media (min-width: 390px) and (max-width: 768px) { .title-image { max-height: 6rem } }
 @media (min-width: 769px) { .title-image { max-height: 9rem } }
 </style>
