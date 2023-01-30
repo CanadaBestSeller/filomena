@@ -40,6 +40,9 @@ export default {
     dislikeQuestion: 'I don\'t like this question',
     gameOver: 'Game over!',
     winnerIs: 'The winner is {0} {1}',
+    feedback: 'What do you think of this game?',
+    feedbackSend: 'Send feedback 😎',
+    feedbackThankYou: 'Thank you for your feedback ❤️'
   },
   form: {
     whatsYourName: 'What\'s your name?',

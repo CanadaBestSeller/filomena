@@ -40,6 +40,9 @@ export default {
     dislikeQuestion: '我不喜欢这个问题',
     gameOver: '游戏结束!',
     winnerIs: '赢家是{0} {1}',
+    feedback: '觉得这个游戏怎么样?',
+    feedbackSend: '📝',
+    feedbackThankYou: '谢谢你的反馈 ❤️'
   },
   form: {
     whatsYourName: '你叫什么名字?',

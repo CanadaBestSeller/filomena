@@ -40,6 +40,9 @@ export default {
     dislikeQuestion: 'Je n\'aime pas cette question\n',
     gameOver: 'Jeu terminé!',
     winnerIs: '{0} {1} est le gagnant 🎉',
+    feedback: 'Que pense-tu de ce jeu ?',
+    feedbackSend: 'Envoyer 📝',
+    feedbackThankYou: 'Merci pour tes commentaires ❤️'
   },
   form: {
     whatsYourName: 'Comment t\'appelles-tu?',

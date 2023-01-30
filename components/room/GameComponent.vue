@@ -9,6 +9,13 @@
       <h3>{{ $t('game.gameOver') }}</h3>
       <h2 class="my-2">{{ $t('game.winnerIs', [getWinningPlayerWithTotalPoints().name, getWinningPlayerWithTotalPoints().emoji]) }}</h2>
       <RoomPlayerStatusPopover :f="f" class="mb-5"/>
+
+      <b-form v-if="!feedback.hasSubmitted" @submit.prevent="submitFeedbackLocally">
+        <b-form-input class="text-center" id="form-input-feedback" maxLength="320" v-model="feedback.text" :placeholder="$t('game.feedback')" required />
+        <b-button class="shadow mx-1" variant="warning" type="submit" :disabled="!feedback.text">{{ $t('game.feedbackSend') }}</b-button>
+      </b-form>
+      <p class="text-success" v-else>{{ $t('game.feedbackThankYou') }}</p>
+
     </div>
 
 
@@ -63,7 +70,7 @@
 
     <!-- SUMMARY SCREEN, no vote at all -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0" class="container-sm text-center">
-      <h3>{{ currentQuestionResolved }}</h3>
+      <RoomQuestionWithFeedback :questionText="currentQuestionResolved" :questionId="currentQuestionId"/>
       <h1>oooThere were no votes!</h1>
       <RoomPlayerStatusPopover :f="f" class="my-2"/>
       <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
@@ -92,7 +99,7 @@
 
     <!-- SUMMARY SCREEN, many winning votes -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length > 1" class="container-sm text-center">
-      <h3>{{ currentQuestionResolved }}</h3>
+      <RoomQuestionWithFeedback :questionText="currentQuestionResolved" :questionId="currentQuestionId"/>
       <h5>oooIt's a tie!</h5>
 
       <b-list-group>
@@ -118,7 +125,7 @@ import {
   getCurrentTimeEpochSec,
   transitionAfterVote,
   transitionAfterAnswer,
-  voteForAnswer, transitionAfterSummary, getCurrentWinningAnswers, getOrderedPlayersWithTotalPoints
+  voteForAnswer, transitionAfterSummary, getCurrentWinningAnswers, getOrderedPlayersWithTotalPoints, addFinalFeedback
 } from '@/lib/firebase_gateway'
 import PlayerStatus from '~/components/room/PlayerStatusGrid'
 
@@ -152,6 +159,8 @@ export default {
       voteRadioOption: null,
 
       summaryTimerCount: -1,
+
+      feedback: { text: '', hasSubmitted: false }
     }
   },
 
@@ -209,6 +218,11 @@ export default {
       })
       return winningPlayer
     },
+
+    submitFeedbackLocally() {
+      addFinalFeedback(this.feedback.text, this.f.user.uid)
+      this.feedback.hasSubmitted = true
+    }
   },
 
   watch: {
