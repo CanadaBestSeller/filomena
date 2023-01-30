@@ -36,6 +36,8 @@ export default {
     winningAnswerIs: 'The winning answer is...',
     votes: '{0} votes',
     scoreboard: 'Scoreboard 📊',
+    loveQuestion: 'I love this question',
+    dislikeQuestion: 'I don\'t like this question',
     gameOver: 'Game over!',
     winnerIs: 'The winner is {0} {1}',
   },

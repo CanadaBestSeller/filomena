@@ -14,7 +14,7 @@
 
     <!-- ANSWER SCREEN, entering answer-->
     <div id="answering-div" v-cloak class="container-sm text-center" v-else-if="f.roomDoc.gameStatus === 'ANSWER' && !answered">
-      <h2>{{ currentQuestion }}</h2>
+      <h2>{{ currentQuestionResolved }}</h2>
 
       <b-badge pill :variant="answerTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [answerTimerCount]) }}</h6></b-badge>
 
@@ -35,7 +35,7 @@
 
     <!-- VOTE SCREEN, not voted -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'VOTE' && !voted" class="container-sm text-center">
-      <h2>{{ currentQuestion }}</h2>
+      <h2>{{ currentQuestionResolved }}</h2>
 
       <b-badge pill :variant="voteTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [voteTimerCount]) }}</h6></b-badge>
 
@@ -63,7 +63,7 @@
 
     <!-- SUMMARY SCREEN, no vote at all -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 0" class="container-sm text-center">
-      <h3>{{ currentQuestion }}</h3>
+      <h3>{{ currentQuestionResolved }}</h3>
       <h1>oooThere were no votes!</h1>
       <RoomPlayerStatusPopover :f="f" class="my-2"/>
       <b-badge pill :variant="summaryTimerVariant"><h6 class="m-0">{{ $t('general.secondsLeft', [summaryTimerCount]) }}</h6></b-badge>
@@ -74,12 +74,12 @@
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length === 1" style="overflow-y: auto; max-height: 60vh;">
 
       <div class="container-sm text-center">
-        <h3>{{ currentQuestion }}</h3>
+        <RoomQuestionWithFeedback :questionText="currentQuestionResolved" :questionId="currentQuestionId"/>
         <h5>{{ $t('game.winningAnswerIs') }}</h5>
 
         <h2 class="mt-5 mb-0"><i>"{{ currentWinningAnswers[0].text }}"</i></h2>
         <h4 class="mt-0 mb-5">
-          - {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})
+          - {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).name }} {{ f.roomDoc.players.find(p => p.uid === currentWinningAnswers[0].uid).emoji }} ({{ $t('game.votes', [currentWinningAnswers[0].votes]) }})
         </h4>
 
         <RoomPlayerStatusPopover :f="f" class="my-2"/>
@@ -92,7 +92,7 @@
 
     <!-- SUMMARY SCREEN, many winning votes -->
     <div v-cloak v-else-if="f.roomDoc.gameStatus === 'SUMMARY' && currentWinningAnswers.length > 1" class="container-sm text-center">
-      <h3>{{ currentQuestion }}</h3>
+      <h3>{{ currentQuestionResolved }}</h3>
       <h5>oooIt's a tie!</h5>
 
       <b-list-group>
@@ -156,9 +156,14 @@ export default {
   },
 
   computed: {
-    currentQuestion() {
+    currentQuestionResolved() {
       const currentQuestion = this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex]
       return this.$t(currentQuestion.id, [currentQuestion.subject1, currentQuestion.subject2])
+    },
+
+    currentQuestionId() {
+      const currentQuestion = this.f.roomDoc.questions[this.f.roomDoc.currentQuestionIndex]
+      return currentQuestion.id
     },
 
     currentWinningAnswers() { return getCurrentWinningAnswers(this.f.roomDoc) },
@@ -190,7 +195,7 @@ export default {
       this.voted = true
     },
 
-    getCurrentQuestion() {
+    getcurrentQuestionResolved() {
       const currentQuestionIndex = this.f.roomDoc.currentQuestionIndex
       return this.f.roomDoc.questions[currentQuestionIndex]
     },

@@ -36,6 +36,8 @@ export default {
     winningAnswerIs: '最好的答案是...',
     votes: '{0}票',
     scoreboard: '记分牌📊',
+    loveQuestion: '我喜欢这个问题',
+    dislikeQuestion: '我不喜欢这个问题',
     gameOver: '游戏结束!',
     winnerIs: '赢家是{0} {1}',
   },
