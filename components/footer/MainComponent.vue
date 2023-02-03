@@ -17,7 +17,7 @@
     <b-navbar-nav>
       <li id="dark-mode" class="nav-item align-self-center">
         <b-link class="text-decoration-none" @click="toggleDarkMode()">
-          {{ $colorMode.preference === 'dark' ? '🌞' : '🌚' }}
+          {{ $colorMode.value === 'dark' ? '🌞' : '🌚' }}
         </b-link>
       </li>
     </b-navbar-nav>

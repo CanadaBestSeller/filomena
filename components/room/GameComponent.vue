@@ -210,7 +210,7 @@ export default {
     },
 
     getWinningPlayerWithTotalPoints() {
-      let max = 0
+      let max = -1
       let winningPlayer = null
       this.f.roomDoc.players.forEach(p => {
         const currentPoints = p.points.reduce((total, points) => total + points, 0)
@@ -256,7 +256,7 @@ export default {
     'f.roomDoc.gameStatus': {  // Transition based on participation (e.g. All players have answered)
       async handler(newStatus, oldStatus) {
         if (oldStatus === 'ANSWER' && newStatus === 'VOTE') {
-          await transitionAfterAnswer(this.f.roomDocRef)
+          await transitionAfterAnswer(this.f.roomDocRef, this.f.roomDoc)
           this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
         }
 
@@ -273,8 +273,9 @@ export default {
     totalPlayTime: {  // Transition based on time - this is a hack to check the time every second
       async handler(newPlayTime, oldPlayTime) {
         if (this.f.roomDoc.gameStatus === 'ANSWER' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) {
-          await transitionAfterAnswer(this.f.roomDocRef)
+          await transitionAfterAnswer(this.f.roomDocRef, this.f.roomDoc)
           this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
+          this.answerTimerCount = -1
         }
 
         if (this.f.roomDoc.gameStatus === 'VOTE' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) {

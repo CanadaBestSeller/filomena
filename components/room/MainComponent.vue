@@ -87,10 +87,10 @@ export default {
   async created () {
     // Register firebase realtime stream listener on the entire root collection
     this.f.roomDocRef = db.collection('rooms').doc(this.roomId)
-    this.f.roomDocRef.onSnapshot({ includeMetadataChanges: true }, doc => {
+    this.f.roomDocRef.onSnapshot({ includeMetadataChanges: false }, doc => {
       if (doc.exists) {
         console.log('Room doc changed:')
-        console.log(doc.data())
+        console.log(JSON.stringify(doc.data(), null, '\t'))
         this.f.roomDoc = doc.data()
       } else {
         this.$router.push({ name: 'index', params: { invalidRoomId: this.roomId } })

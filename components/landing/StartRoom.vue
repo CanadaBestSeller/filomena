@@ -61,7 +61,7 @@ export default {
   computed: { isNameFieldInvalid () { return !this.form.name ? true : this.form.name.length > 40 }, },
 
   methods: {
-    async guestSignInAndCreateRoom () {
+    async guestSignInAndCreateRoom() {
       try {
         this.form.isLoading = true
         this.form.errorMessage = null
