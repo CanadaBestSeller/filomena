@@ -256,16 +256,18 @@ export default {
     'f.roomDoc.gameStatus': {  // Transition based on participation (e.g. All players have answered)
       async handler(newStatus, oldStatus) {
         if (oldStatus === 'ANSWER' && newStatus === 'VOTE') {
-          await transitionAfterAnswer(this.f.roomDocRef, this.f.roomDoc)
-          this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
+          this.voteTimerCount = this.f.roomDoc.configuredVoteTimeLimitSec
         }
 
         if (oldStatus === 'VOTE' && newStatus === 'SUMMARY') {
-          await transitionAfterVote(this.f.roomDocRef, this.f.roomDoc)
-          this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
+          this.summaryTimerCount = this.f.roomDoc.configuredSummaryTimeLimitSec
           this.voted = false
           this.voteTimerCount = -1
           this.voteRadioOption = null
+        }
+
+        if (oldStatus === 'SUMMARY' && newStatus === 'ANSWER') {
+          this.answerTimerCount = this.f.roomDoc.configuredAnswerTimeLimitSec
         }
       }
     },
@@ -274,13 +276,13 @@ export default {
       async handler(newPlayTime, oldPlayTime) {
         if (this.f.roomDoc.gameStatus === 'ANSWER' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) {
           await transitionAfterAnswer(this.f.roomDocRef, this.f.roomDoc)
-          this.voteTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) - getCurrentTimeEpochSec()
+          this.voteTimerCount = this.f.roomDoc.configuredVoteTimeLimitSec
           this.answerTimerCount = -1
         }
 
         if (this.f.roomDoc.gameStatus === 'VOTE' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredVoteTimeLimitSec) {
           await transitionAfterVote(this.f.roomDocRef, this.f.roomDoc)
-          this.summaryTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) - getCurrentTimeEpochSec()
+          this.summaryTimerCount = this.f.roomDoc.configuredSummaryTimeLimitSec
           this.voted = false
           this.voteTimerCount = -1
           this.voteRadioOption = null
@@ -288,7 +290,7 @@ export default {
 
         if (this.f.roomDoc.gameStatus === 'SUMMARY' && getCurrentTimeEpochSec() >= this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredSummaryTimeLimitSec) {
           await transitionAfterSummary(this.f.roomDocRef, this.f.roomDoc)
-          this.answerTimerCount = (this.f.roomDoc.currentGameStatusTimestampEpochSec + this.f.roomDoc.configuredAnswerTimeLimitSec) - getCurrentTimeEpochSec()
+          this.answerTimerCount = this.f.roomDoc.configuredAnswerTimeLimitSec
         }
       },
       immediate: true // This ensures the watcher is triggered upon creation
