@@ -50,7 +50,7 @@
         <b-form-group v-slot="{ ariaDescribedby }">
           <b-form-radio v-for="answer in f.roomDoc.questions[f.roomDoc.currentQuestionIndex].answers" :key="answer.uid"
                         v-model="voteRadioOption" :aria-describedby="ariaDescribedby" name="vote-group"
-                        :value="answer.uid" :disabled="answer.uid === f.user.uid">
+                        :value="answer.uid" :disabled="answer.uid === f.user.uid" class="my-1">
                         {{ answer.text }}
           </b-form-radio>
         </b-form-group>

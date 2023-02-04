@@ -22,12 +22,10 @@
       <RoomPlayerComponent :f="f"/>
 
     <div class="my-1 d-flex justify-content-center">
-    <!-- TODO remove this after styling looks good -->
-    <b-button class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
-<!--    <b-button v-cloak v-if="f.roomDoc.players.length < 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" disabled variant="success">oooWe need at least 3 players to start game</b-button>-->
-<!--    <b-button v-cloak v-else-if="f.roomDoc.players.length >= 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>-->
-<!--    <p v-cloak v-else-if="f.roomDoc.players.length < 3">oooWe need at least 3 players to start game</p>-->
-<!--    <p v-cloak v-else>oooWaiting for {{ f.roomDoc.players.find(p => p.uid === f.roomDoc.hostUid).name }} to start game...</p>-->
+      <b-button v-cloak v-if="f.roomDoc.players.length < 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" disabled variant="success">{{ $t('lobby.need3Players') }}</b-button>
+      <b-button v-cloak v-else-if="f.roomDoc.players.length >= 3 && f.roomDoc.hostUid === f.user.uid" class="shadow" size="lg" @click="startGame()" variant="success">{{ $t('lobby.startGame') }}</b-button>
+      <p v-cloak v-else-if="f.roomDoc.players.length < 3">{{ $t('lobby.need3Players') }}</p>
+      <p v-cloak v-else>{{ $t('lobby.waitingForHost', [f.roomDoc.players.find(p => p.uid === f.roomDoc.hostUid).name]) }}</p>
     </div>
 
   </div>

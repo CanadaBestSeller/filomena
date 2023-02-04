@@ -27,6 +27,8 @@ export default {
     inviteFriends: 'Invite tes amis à rejoindre!',
     players: 'Joueurs',
     you: '{0} (Toi)',
+    need3Players: 'Besoin de 3 joueurs pour commencer le jeu!',
+    waitingForHost: 'En attendant que {0} commence le jeu...',
   },
   game: {
     answer: 'Répondre {0}',

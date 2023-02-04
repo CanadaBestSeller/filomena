@@ -27,6 +27,8 @@ export default {
     inviteFriends: '邀请朋友加入房间!',
     players: '玩家',
     you: '{0} (你)',
+    need3Players: '开始游戏需要3个人!',
+    waitingForHost: '等待{0}开始游戏...',
   },
   game: {
     answer: '回答 {0}',
