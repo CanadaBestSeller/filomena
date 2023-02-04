@@ -34,6 +34,7 @@ body {
   border-radius: 1rem;
 }
 
+$popover-bg: $light;
 
 h1 { @include font-size(5rem) }
 h2 { @include font-size(3rem) }
